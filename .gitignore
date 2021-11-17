@@ -58,5 +58,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-# made on accident
+# Other files to ignore
 .gitignore.rtf
+.DS_Store
