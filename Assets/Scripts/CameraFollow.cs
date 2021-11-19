@@ -6,11 +6,15 @@ public class CameraFollow : MonoBehaviour
 {
     public Rigidbody2D player;
     public Transform cameraTransform;
-    PlayerState.CurrentPlayerState state;
+    PlayerState stateEnum;
 
-    // Update is called once per frame
+    void Start() {
+        stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+    }
+
     void Update()
     {
+        PlayerState.CurrentPlayerState state = stateEnum.state;
         if (state == PlayerState.CurrentPlayerState.OVERWORLD)
             cameraTransform.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10f);
     }

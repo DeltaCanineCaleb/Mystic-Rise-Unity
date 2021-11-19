@@ -7,9 +7,18 @@ public enum CurrentBattleState { START , YOUR_TURN, AWAITING_TURN, CPU_TURN, END
 public class BattleScript : MonoBehaviour
 {
     public CurrentBattleState battleState;
+    PlayerState stateEnum;
     PlayerState.CurrentPlayerState playerState;
 
-    // Start is called before the first frame update
+    void Start() {
+        stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+    }
+
+    void Update()
+    {
+        playerState = stateEnum.state;
+    }
+    
     void BattleStart()
     {
         battleState = CurrentBattleState.START;

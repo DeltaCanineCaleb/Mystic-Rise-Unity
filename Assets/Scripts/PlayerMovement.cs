@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
             } else {
                 rb.velocity = new Vector2(0f, rb.velocity.y);
             }
+        } else if (state == PlayerState.CurrentPlayerState.BATTLE) {
+            // set the player to their battle station wherever that is
         }
     }
 }
