@@ -6,15 +6,13 @@ public enum CurrentBattleState { START , YOUR_TURN, AWAITING_TURN, CPU_TURN, END
 
 public class BattleScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public CurrentBattleState battleState;
+    PlayerState.CurrentPlayerState playerState;
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    void BattleStart()
     {
-        
+        battleState = CurrentBattleState.START;
+        playerState = PlayerState.CurrentPlayerState.BATTLE;
     }
 }
