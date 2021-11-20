@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public Transform battleStation;
     PlayerState stateEnum;
 
     void Start() {
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
             }
         } else if (state == PlayerState.CurrentPlayerState.BATTLE) {
             // set the player to their battle station wherever that is
+            rb.position = battleStation.position;
         }
     }
 }
