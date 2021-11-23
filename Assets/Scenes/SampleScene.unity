@@ -627,6 +627,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4652698306236958915, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5235849
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652698306236958915, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
+      propertyPath: m_Color.g
+      value: 0.79646826
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652698306236958915, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4652698306236958916, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1432,6 +1444,7 @@ MonoBehaviour:
   battleStations:
   - {fileID: 572565896}
   - {fileID: 2062364524}
+  player: {fileID: 0}
 --- !u!1 &1511429071
 GameObject:
   m_ObjectHideFlags: 0
