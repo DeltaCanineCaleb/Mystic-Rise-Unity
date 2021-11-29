@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeefe682ac37b4ca4bea8295806e6d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Hunter
-  characterLevel: 5
-  attack: 5
-  currentHP: 20
-  maxHP: 20
+  characterName: Slime
+  characterLevel: 3
+  attack: 2
+  currentHP: 12
+  maxHP: 12
