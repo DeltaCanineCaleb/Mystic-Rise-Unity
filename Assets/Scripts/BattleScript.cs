@@ -43,17 +43,25 @@ public class BattleScript : MonoBehaviour
         List<GameObject> turnOrder = new List<GameObject>();
         turnOrder.Add(player);
         turnOrder.Add(enemyOpponent);
-        List<GameObject> leftSide = new List<GameObject>();
-        leftSide.Add(player);
-        List<GameObject> rightSide = new List<GameObject>();
-        rightSide.Add(enemyOpponent);
         List<GameObject> battleCharacters = new List<GameObject>();
-        battleCharacters.AddRange(leftSide);
-        battleCharacters.AddRange(rightSide);
+        battleCharacters.AddRange(turnOrder);
         // choose funny battle start text depending on the enemy
         battleText.text = battleCharacters[1].GetComponent<Character>().characterName + " attacks!";
         // start the battle loop using the turn order
         StartCoroutine(PlayerTurn(turnOrder, battleCharacters));
+    }
+
+    void checkDeath(List<GameObject> battleCharacters) 
+    {
+        if (battleCharacters[0].GetComponent<Character>().currentHP <= 0) {
+            Destroy(battleCharacters[0]);
+            stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+            StopAllCoroutines();
+        } else if (battleCharacters[1].GetComponent<Character>().currentHP <= 0) {
+            Destroy(battleCharacters[1]);
+            stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+            StopAllCoroutines();
+        }
     }
 
     IEnumerator PlayerTurn(List<GameObject> turnOrder, List<GameObject> battleCharacters)
@@ -65,10 +73,31 @@ public class BattleScript : MonoBehaviour
         {
             GameObject target = battleCharacters[1];
             battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + turnOrder[0].GetComponent<Character>().attack + " damage!";
-            target.GetComponent<Character>().currentHP -= battleCharacters[0].GetComponent<Character>().attack;
+            target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
             panelOfButtons.SetActive(false);
             // check for if anyone died
+            checkDeath(battleCharacters);
+            yield return new WaitForSeconds(1);
             // move turnOrder
+            GameObject playerTurn = turnOrder[0];
+            turnOrder.RemoveAt(0);
+            turnOrder.Add(playerTurn);
+            StartCoroutine(CPUTurn(turnOrder, battleCharacters));
         }
+    }
+
+    IEnumerator CPUTurn(List<GameObject> turnOrder, List<GameObject> battleCharacters)
+    {
+        GameObject target = battleCharacters[0];
+        battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + turnOrder[0].GetComponent<Character>().attack + " damage!";
+        target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
+        // check for if anyone died
+        checkDeath(battleCharacters);
+        yield return new WaitForSeconds(1);
+        // move turnOrder
+        GameObject playerTurn = turnOrder[0];
+        turnOrder.RemoveAt(0);
+        turnOrder.Add(playerTurn);
+        StartCoroutine(PlayerTurn(turnOrder, battleCharacters));
     }
 }
