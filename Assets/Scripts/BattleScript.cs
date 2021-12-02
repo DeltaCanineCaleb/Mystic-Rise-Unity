@@ -29,15 +29,26 @@ public class BattleScript : MonoBehaviour
         playerState = stateEnum.state;
         if (Input.GetKey("b") && playerState == PlayerState.CurrentPlayerState.OVERWORLD) {
             stateEnum.state = PlayerState.CurrentPlayerState.BATTLE;
-            BattleStart();
+            BattleStart(null);
         }
     }
     
-    void BattleStart()
+    public void BattleTrigger(GameObject enemy)
+    {
+        stateEnum.state = PlayerState.CurrentPlayerState.BATTLE;
+        BattleStart(enemy);
+    }
+    
+    void BattleStart(GameObject enemy)
     {
         battleState = CurrentBattleState.START;
         // instantiate enemy since no reference to them exists yet
-        GameObject enemyOpponent = Instantiate(characterPrefab, battleStations[1].transform.position, Quaternion.identity);
+        GameObject enemyOpponent;
+        if (enemy == null) {
+            enemyOpponent = Instantiate(characterPrefab, battleStations[1].transform.position, Quaternion.identity);
+        } else {
+            enemyOpponent = enemy;
+        }
         // determine player turn order, based on speeds*
         // player goes first for now
         List<GameObject> turnOrder = new List<GameObject>();
@@ -76,8 +87,8 @@ public class BattleScript : MonoBehaviour
             target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
             panelOfButtons.SetActive(false);
             // check for if anyone died
+            yield return new WaitForSeconds(1.25f);
             checkDeath(battleCharacters);
-            yield return new WaitForSeconds(1);
             // move turnOrder
             GameObject playerTurn = turnOrder[0];
             turnOrder.RemoveAt(0);
@@ -92,8 +103,8 @@ public class BattleScript : MonoBehaviour
         battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + turnOrder[0].GetComponent<Character>().attack + " damage!";
         target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
         // check for if anyone died
+        yield return new WaitForSeconds(1.25f);
         checkDeath(battleCharacters);
-        yield return new WaitForSeconds(1);
         // move turnOrder
         GameObject playerTurn = turnOrder[0];
         turnOrder.RemoveAt(0);
