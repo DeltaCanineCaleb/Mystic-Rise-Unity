@@ -648,7 +648,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1511429072}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1100,7 +1100,7 @@ RectTransform:
   m_Children:
   - {fileID: 930745321}
   m_Father: {fileID: 1511429072}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1285,6 +1285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca0bf13ddbc74461972a24cb52415b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 1086524308}
+  GameManager: {fileID: 1492669187}
 --- !u!1 &1154990598
 GameObject:
   m_ObjectHideFlags: 0
@@ -1426,7 +1428,7 @@ RectTransform:
   m_Children:
   - {fileID: 271249558}
   m_Father: {fileID: 1511429072}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1547,7 +1549,7 @@ RectTransform:
   m_Children:
   - {fileID: 315673788}
   m_Father: {fileID: 1511429072}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1829,6 +1831,12 @@ MonoBehaviour:
   battleText: {fileID: 115026340}
   panelOfButtons: {fileID: 1511429071}
   attackButton: {fileID: 530485891}
+  itemsButton: {fileID: 1317749391}
+  skillsButton: {fileID: 879354672}
+  runButton: {fileID: 1332594178}
+  cameraTransform: {fileID: 519420032}
+  runChance: 84
+  waitTime: 1.25
 --- !u!1 &1511429071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,10 +1866,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0.4184998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1332594177}
-  - {fileID: 879354671}
-  - {fileID: 1317749390}
   - {fileID: 530485890}
+  - {fileID: 1317749390}
+  - {fileID: 879354671}
+  - {fileID: 1332594177}
   m_Father: {fileID: 659597209}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
