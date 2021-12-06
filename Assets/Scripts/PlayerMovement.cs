@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Transform battleStation;
-    public float speed;
+    float speed;
     PlayerState stateEnum;
 
     void Start() {
@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerState.CurrentPlayerState state = stateEnum.state;
         if (state == PlayerState.CurrentPlayerState.OVERWORLD) {
             if (Input.GetKey("left shift")) {
-                speed = 10f;
+                speed = 12.5f;
             } else {
                 speed = 5f;
             }
@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         } else if (state == PlayerState.CurrentPlayerState.BATTLE) {
             // set the player to their battle station wherever that is
             rb.position = battleStation.position;
+            rb.velocity = new Vector2(0f, 0f);
         }
     }
 }

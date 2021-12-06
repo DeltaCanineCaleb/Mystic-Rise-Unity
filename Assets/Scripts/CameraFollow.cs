@@ -12,7 +12,7 @@ public class CameraFollow : MonoBehaviour
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         PlayerState.CurrentPlayerState state = stateEnum.state;
         if (state == PlayerState.CurrentPlayerState.OVERWORLD)

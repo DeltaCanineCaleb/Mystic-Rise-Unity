@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1882353, g: 0.0627451, b: 0.1882353, a: 1}
+  m_Color: {r: 0.3764706, g: 0.0627451, b: 0.1882353, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -403,6 +403,8 @@ GameObject:
   - component: {fileID: 8233447737947784472}
   - component: {fileID: 7362691663786220776}
   - component: {fileID: 8085124012493692328}
+  - component: {fileID: 3265848779306203860}
+  - component: {fileID: 7006225744281938456}
   m_Layer: 5
   m_Name: BattleHUD
   m_TagString: Untagged
@@ -470,6 +472,36 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3265848779306203860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5934824256696915407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a388ff5987a9a49009cf45d9e0dbad33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  HUDTransform: {fileID: 0}
+--- !u!114 &7006225744281938456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5934824256696915407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c26f35658d77420eb38721f193bdcf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterObject: {fileID: 0}
+  characterName: {fileID: 7183471528998544824}
+  characterLevel: {fileID: 1677544063106840841}
+  characterHPBar: {fileID: 2315939929311574805}
 --- !u!1 &6000292667482003135
 GameObject:
   m_ObjectHideFlags: 0

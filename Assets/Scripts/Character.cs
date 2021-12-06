@@ -12,4 +12,20 @@ public class Character : MonoBehaviour
     // public int speed;
     public int currentHP;
     public int maxHP;
+    public GameObject battleHUD;
+
+    void Start()
+    {
+        battleHUD.SetActive(false);
+    }
+
+    void OnMouseEnter()
+    {
+        battleHUD.SetActive(true);
+    }
+
+    void OnMouseExit()
+    {
+        battleHUD.SetActive(false);
+    }
 }
