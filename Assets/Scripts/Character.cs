@@ -12,6 +12,7 @@ public class Character : MonoBehaviour
     // public int speed;
     public int currentHP;
     public int maxHP;
+    public string team;
     public GameObject battleHUD;
 
     void Start()

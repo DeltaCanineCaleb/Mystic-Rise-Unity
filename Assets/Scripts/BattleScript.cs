@@ -4,15 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = System.Random;
 
-public enum CurrentBattleState { START , YOUR_TURN, AWAITING_TURN, CPU_TURN, END}
-
 public class BattleScript : MonoBehaviour
 {
-    public CurrentBattleState battleState;
-
     public GameObject characterPrefab;
     public Transform[] battleStations;
     public GameObject player;
+    public Camera playerCamera;
 
     PlayerState stateEnum;
     PlayerState.CurrentPlayerState playerState;
@@ -23,13 +20,14 @@ public class BattleScript : MonoBehaviour
     public Button itemsButton;
     public Button skillsButton;
     public Button runButton;
-    public Transform cameraTransform;
+    Transform cameraTransform;
 
     public int runChance;
     public float waitTime;
 
     void Start() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+        cameraTransform = playerCamera.transform;
     }
 
     void Update()
@@ -37,7 +35,9 @@ public class BattleScript : MonoBehaviour
         playerState = stateEnum.state;
         if (Input.GetKey("b") && playerState == PlayerState.CurrentPlayerState.OVERWORLD) {
             stateEnum.state = PlayerState.CurrentPlayerState.BATTLE;
-            BattleStart(null);
+            List<GameObject> opponents = new List<GameObject>();
+            opponents.Add(null);
+            BattleStart(opponents);
         }
     }
 
@@ -50,27 +50,38 @@ public class BattleScript : MonoBehaviour
     public void BattleTrigger(GameObject enemy)
     {
         stateEnum.state = PlayerState.CurrentPlayerState.BATTLE;
-        BattleStart(enemy);
+        List<GameObject> opponents = new List<GameObject>();
+        opponents.Add(enemy);
+        BattleStart(opponents);
     }
     
-    void BattleStart(GameObject enemy)
+    void BattleStart(List<GameObject> enemies)
     {
-        battleState = CurrentBattleState.START;
+        List<GameObject> turnOrder = new List<GameObject>();
+        turnOrder.Add(player);
         // instantiate enemy since no reference to them exists yet
         GameObject enemyOpponent;
-        if (enemy == null) {
+        if (enemies[0] == null) {
             enemyOpponent = Instantiate(characterPrefab, battleStations[1].transform.position, Quaternion.identity);
+            enemyOpponent.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
+            turnOrder.Add(enemyOpponent);
+            enemyOpponent = Instantiate(characterPrefab, battleStations[2].transform.position, Quaternion.identity);
+            enemyOpponent.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
+            turnOrder.Add(enemyOpponent);
         } else {
-            enemyOpponent = enemy;
-            cameraTransform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, -10f);
-            enemy.transform.position = battleStations[1].transform.position;
-            enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            int enemyStation = 1;
+            foreach (var enemy in enemies)
+            {
+                enemyOpponent = enemy;
+                cameraTransform.position = new Vector3(enemyOpponent.transform.position.x, enemyOpponent.transform.position.y, -10f);
+                enemyOpponent.transform.position = battleStations[enemyStation].transform.position;
+                enemyOpponent.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                turnOrder.Add(enemyOpponent);
+                enemyStation += 1;
+            }
         }
         // determine player turn order, based on speeds*
         // player goes first for now
-        List<GameObject> turnOrder = new List<GameObject>();
-        turnOrder.Add(player);
-        turnOrder.Add(enemyOpponent);
         List<GameObject> battleCharacters = new List<GameObject>();
         battleCharacters.AddRange(turnOrder);
         // choose funny battle start text depending on the enemy
