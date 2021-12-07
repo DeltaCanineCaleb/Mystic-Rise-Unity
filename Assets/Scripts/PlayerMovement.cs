@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         PlayerState.CurrentPlayerState state = stateEnum.state;
         if (state == PlayerState.CurrentPlayerState.OVERWORLD) {
