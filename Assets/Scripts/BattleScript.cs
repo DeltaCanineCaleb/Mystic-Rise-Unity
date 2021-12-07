@@ -144,7 +144,12 @@ public class BattleScript : MonoBehaviour
                 GameObject playerTurn = turnOrder[0];
                 turnOrder.RemoveAt(0);
                 turnOrder.Add(playerTurn);
-                StartCoroutine(CPUTurn(turnOrder, battleCharacters));
+                if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                    StartCoroutine(CPUTurn(turnOrder, battleCharacters));
+                } else {
+                    StartCoroutine(PlayerTurn(turnOrder, battleCharacters));
+                }
+                
             }
         }
     }
@@ -158,10 +163,14 @@ public class BattleScript : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         if (!checkDeath(battleCharacters)) {
             // move turnOrder
-            GameObject playerTurn = turnOrder[0];
+            GameObject enemyTurn = turnOrder[0];
             turnOrder.RemoveAt(0);
-            turnOrder.Add(playerTurn);
-            StartCoroutine(PlayerTurn(turnOrder, battleCharacters));
+            turnOrder.Add(enemyTurn);
+            if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                StartCoroutine(CPUTurn(turnOrder, battleCharacters));
+            } else {
+                StartCoroutine(PlayerTurn(turnOrder, battleCharacters));
+            }
         }
     }
 }
