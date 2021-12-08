@@ -250,7 +250,7 @@ MonoBehaviour:
   attack: 2
   currentHP: 12
   maxHP: 12
-  team: Enemy
+  team: enemy
   battleHUD: {fileID: 274066013306581051}
 --- !u!1001 &5877503873214572020
 PrefabInstance:

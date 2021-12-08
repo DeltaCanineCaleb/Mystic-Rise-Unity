@@ -82,23 +82,51 @@ public class BattleScript : MonoBehaviour
         }
         // determine player turn order, based on speeds*
         // player goes first for now
-        List<GameObject> battleCharacters = new List<GameObject>();
-        battleCharacters.AddRange(turnOrder);
         // choose funny battle start text depending on the enemy
-        battleText.text = battleCharacters[1].GetComponent<Character>().characterName + " attacks!";
+        battleText.text = turnOrder[1].GetComponent<Character>().characterName + " attacks!";
         // start the battle loop using the turn order
-        StartCoroutine(PlayerTurn(turnOrder, battleCharacters));
+        StartCoroutine(PlayerTurn(turnOrder));
     }
 
-    bool checkDeath(List<GameObject> battleCharacters) 
+    List<GameObject> separateTeams(List<GameObject> turnOrder, string side)
     {
-        if (battleCharacters[0].GetComponent<Character>().currentHP <= 0) {
-            Destroy(battleCharacters[0]);
+        List<GameObject> leftTeam = new List<GameObject>();
+        List<GameObject> rightTeam = new List<GameObject>();
+        foreach (var character in turnOrder)
+        {
+            if (character.GetComponent<Character>().team == "enemy") {
+                rightTeam.Add(character);
+            } else {
+                leftTeam.Add(character);
+            }
+        }
+        if (side == "left") {
+            return leftTeam;
+        } else if (side == "right") {
+            return rightTeam;
+        } else {
+            return new List<GameObject>();
+        }
+    }
+
+    bool checkDeath(List<GameObject> turnOrder) 
+    {
+        int deathCheckInt = 0;
+        foreach (var character in new List<GameObject>(turnOrder))
+        {
+            if (character.GetComponent<Character>().currentHP <= 0) {
+                Destroy(turnOrder[deathCheckInt]);
+                turnOrder.RemoveAt(deathCheckInt);
+            }
+            deathCheckInt += 1;
+        }
+        List<GameObject> leftTeam = separateTeams(turnOrder, "left");
+        List<GameObject> rightTeam = separateTeams(turnOrder, "right");
+        if (leftTeam.Count == 0) {
             stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
             StopAllCoroutines();
             return true;
-        } else if (battleCharacters[1].GetComponent<Character>().currentHP <= 0) {
-            Destroy(battleCharacters[1]);
+        } else if (rightTeam.Count == 0) {
             stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
             StopAllCoroutines();
             return true;
@@ -107,7 +135,7 @@ public class BattleScript : MonoBehaviour
         }
     }
 
-    IEnumerator PlayerTurn(List<GameObject> turnOrder, List<GameObject> battleCharacters)
+    IEnumerator PlayerTurn(List<GameObject> turnOrder)
     {
         if (battleText.text.Contains("damage")) {
             battleText.text = "What will you do?";
@@ -116,18 +144,22 @@ public class BattleScript : MonoBehaviour
         var waitForButton = new WaitForUIButtons(attackButton, runButton);
         yield return waitForButton.Reset();
         if (waitForButton.PressedButton == attackButton) {
-            GameObject target = battleCharacters[1];
+            GameObject target = turnOrder[1];
             battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + turnOrder[0].GetComponent<Character>().attack + " damage!";
             target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
             panelOfButtons.SetActive(false);
             // check for if anyone died
             yield return new WaitForSeconds(waitTime);
-            if (!checkDeath(battleCharacters)) {
+            if (!checkDeath(turnOrder)) {
                 // move turnOrder
                 GameObject playerTurn = turnOrder[0];
                 turnOrder.RemoveAt(0);
                 turnOrder.Add(playerTurn);
-                StartCoroutine(CPUTurn(turnOrder, battleCharacters));
+                if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                    StartCoroutine(CPUTurn(turnOrder));
+                } else {
+                    StartCoroutine(PlayerTurn(turnOrder));
+                }
             }
         } else if (waitForButton.PressedButton == runButton) {
             int runRoll = RandomNumber(0,100);
@@ -140,36 +172,37 @@ public class BattleScript : MonoBehaviour
             } else {
                 battleText.text = turnOrder[0].GetComponent<Character>().characterName + " tried to run, but couldn't get away!";
                 yield return new WaitForSeconds(waitTime);
-                // move turnOrder
-                GameObject playerTurn = turnOrder[0];
-                turnOrder.RemoveAt(0);
-                turnOrder.Add(playerTurn);
-                if (turnOrder[0].GetComponent<Character>().team == "enemy") {
-                    StartCoroutine(CPUTurn(turnOrder, battleCharacters));
-                } else {
-                    StartCoroutine(PlayerTurn(turnOrder, battleCharacters));
+                if (!checkDeath(turnOrder)) {
+                    // move turnOrder
+                    GameObject playerTurn = turnOrder[0];
+                    turnOrder.RemoveAt(0);
+                    turnOrder.Add(playerTurn);
+                    if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                        StartCoroutine(CPUTurn(turnOrder));
+                    } else {
+                        StartCoroutine(PlayerTurn(turnOrder));
+                    }
                 }
-                
             }
         }
     }
 
-    IEnumerator CPUTurn(List<GameObject> turnOrder, List<GameObject> battleCharacters)
+    IEnumerator CPUTurn(List<GameObject> turnOrder)
     {
-        GameObject target = battleCharacters[0];
+        GameObject target = separateTeams(turnOrder, "left")[0];
         battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + turnOrder[0].GetComponent<Character>().attack + " damage!";
         target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
         // check for if anyone died
         yield return new WaitForSeconds(waitTime);
-        if (!checkDeath(battleCharacters)) {
+        if (!checkDeath(turnOrder)) {
             // move turnOrder
             GameObject enemyTurn = turnOrder[0];
             turnOrder.RemoveAt(0);
             turnOrder.Add(enemyTurn);
             if (turnOrder[0].GetComponent<Character>().team == "enemy") {
-                StartCoroutine(CPUTurn(turnOrder, battleCharacters));
+                StartCoroutine(CPUTurn(turnOrder));
             } else {
-                StartCoroutine(PlayerTurn(turnOrder, battleCharacters));
+                StartCoroutine(PlayerTurn(turnOrder));
             }
         }
     }
