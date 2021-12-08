@@ -5,7 +5,12 @@ using UnityEngine;
 public class BattleTriggerScript : MonoBehaviour
 {
     public GameObject enemy;
-    public GameObject GameManager;
+    GameObject GameManager;
+
+    void Start()
+    {
+        GameManager = GameObject.Find("GameManager");
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {

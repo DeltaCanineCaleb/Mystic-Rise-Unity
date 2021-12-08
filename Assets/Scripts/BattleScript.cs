@@ -144,7 +144,7 @@ public class BattleScript : MonoBehaviour
         var waitForButton = new WaitForUIButtons(attackButton, runButton);
         yield return waitForButton.Reset();
         if (waitForButton.PressedButton == attackButton) {
-            GameObject target = turnOrder[1];
+            GameObject target = separateTeams(turnOrder, "right")[0];
             battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + turnOrder[0].GetComponent<Character>().attack + " damage!";
             target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
             panelOfButtons.SetActive(false);

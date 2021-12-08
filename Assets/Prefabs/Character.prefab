@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 4652698306236958913}
   - component: {fileID: 4652698306236958918}
   - component: {fileID: 4652698306236958917}
+  - component: {fileID: 8879824645586275521}
   m_Layer: 0
   m_Name: Character
   m_TagString: Players
@@ -252,6 +253,20 @@ MonoBehaviour:
   maxHP: 12
   team: enemy
   battleHUD: {fileID: 274066013306581051}
+--- !u!114 &8879824645586275521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4652698306236958912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ca0bf13ddbc74461972a24cb52415b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 4652698306236958912}
+  GameManager: {fileID: 0}
 --- !u!1001 &5877503873214572020
 PrefabInstance:
   m_ObjectHideFlags: 0
