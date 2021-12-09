@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
     public int characterLevel;
 
     public int attack;
-    // public int defense;
+    public int defense;
     // public int speed;
     public int currentHP;
     public int maxHP;

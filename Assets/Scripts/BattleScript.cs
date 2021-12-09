@@ -145,8 +145,8 @@ public class BattleScript : MonoBehaviour
         yield return waitForButton.Reset();
         if (waitForButton.PressedButton == attackButton) {
             GameObject target = separateTeams(turnOrder, "right")[0];
-            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + turnOrder[0].GetComponent<Character>().attack + " damage!";
-            target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
+            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
+            target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
             panelOfButtons.SetActive(false);
             // check for if anyone died
             yield return new WaitForSeconds(waitTime);
@@ -190,8 +190,8 @@ public class BattleScript : MonoBehaviour
     IEnumerator CPUTurn(List<GameObject> turnOrder)
     {
         GameObject target = separateTeams(turnOrder, "left")[0];
-        battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + turnOrder[0].GetComponent<Character>().attack + " damage!";
-        target.GetComponent<Character>().currentHP -= turnOrder[0].GetComponent<Character>().attack;
+        battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
+        target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
         // check for if anyone died
         yield return new WaitForSeconds(waitTime);
         if (!checkDeath(turnOrder)) {
