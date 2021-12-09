@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Players
   - Impassable
+  - Items
   layers:
   - Default
   - TransparentFX
