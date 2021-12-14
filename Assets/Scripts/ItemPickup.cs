@@ -3,6 +3,12 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour
 {
     public Item item;
+    public SpriteRenderer sprite;
+
+    void Start() 
+    {
+        sprite.sprite = item.icon;
+    }
 
     void OnTriggerEnter2D()
     {

@@ -16,25 +16,25 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerState.CurrentPlayerState state = stateEnum.state;
         if (state == PlayerState.CurrentPlayerState.OVERWORLD) {
-            if (Input.GetKey("left shift")) {
+            if (Input.GetButton("Sprint")) {
                 speed = 12.5f;
             } else {
                 speed = 5f;
             }
             
             // Up and down movement
-            if (Input.GetKey("w")) {
+            if (Input.GetButton("MoveUp")) {
                 rb.velocity = new Vector2(rb.velocity.x, speed);
-            } else if (Input.GetKey("s")) {
+            } else if (Input.GetButton("MoveDown")) {
                 rb.velocity = new Vector2(rb.velocity.x, -(speed));
             } else {
                 rb.velocity = new Vector2(rb.velocity.x, 0f);
             }
 
             // Left and right movement
-            if (Input.GetKey("d")) {
+            if (Input.GetButton("MoveRight")) {
                 rb.velocity = new Vector2(speed, rb.velocity.y);
-            } else if (Input.GetKey("a")) {
+            } else if (Input.GetButton("MoveLeft")) {
                 rb.velocity = new Vector2(-(speed), rb.velocity.y);
             } else {
                 rb.velocity = new Vector2(0f, rb.velocity.y);
