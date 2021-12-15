@@ -1,13 +1,17 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
+    public Sound[] musicTracks;
+    public Sound[] soundEffects;
+    Sound[] sounds;
 
     void Awake()
     {
+        sounds = musicTracks.Concat(soundEffects).ToArray();
         foreach (Sound s in sounds) {
             s.source = gameObject.AddComponent<AudioSource>(); 
             s.source.clip = s.clip;
