@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using Random = System.Random;
 
 public class BattleScript : MonoBehaviour
@@ -21,12 +22,14 @@ public class BattleScript : MonoBehaviour
     public Button skillsButton;
     public Button runButton;
     Transform cameraTransform;
+    AudioManager audioMan;
 
     public int runChance;
     public float waitTime;
 
     void Start() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+        audioMan = GetComponent<AudioManager>();
         cameraTransform = playerCamera.transform;
     }
 
@@ -145,8 +148,12 @@ public class BattleScript : MonoBehaviour
         yield return waitForButton.Reset();
         if (waitForButton.PressedButton == attackButton) {
             GameObject target = separateTeams(turnOrder, "right")[0];
-            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
-            target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
+            if (turnOrder[0].GetComponent<Character>().attack >= target.GetComponent<Character>().defense) {
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
+                target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
+            } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
+            }
             panelOfButtons.SetActive(false);
             // check for if anyone died
             yield return new WaitForSeconds(waitTime);
@@ -190,8 +197,12 @@ public class BattleScript : MonoBehaviour
     IEnumerator CPUTurn(List<GameObject> turnOrder)
     {
         GameObject target = separateTeams(turnOrder, "left")[0];
-        battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
-        target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
+        if (turnOrder[0].GetComponent<Character>().attack >= target.GetComponent<Character>().defense) {
+            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
+            target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
+        } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
+            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
+        }
         // check for if anyone died
         yield return new WaitForSeconds(waitTime);
         if (!checkDeath(turnOrder)) {
