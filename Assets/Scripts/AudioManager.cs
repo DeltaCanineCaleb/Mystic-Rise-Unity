@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
             s.source.clip = s.clip;
             s.source.volume = s.volume;
         }
+        Play("Temo Village");
     }
 
     public void Play (string name) 
