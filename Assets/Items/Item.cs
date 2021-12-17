@@ -8,6 +8,8 @@ public class Item : ScriptableObject
     public string description = "Lorem ipsum dolor sit amet, youreh motherum adipiscing elit, sed do";
     public string type = null;
     public int value = 0;
+    [HideInInspector]
+    public int count = 1;
 
     public virtual void Use() {
         Debug.Log("Using " + name);

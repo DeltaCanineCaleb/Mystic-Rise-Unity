@@ -24,17 +24,28 @@ public class Inventory : MonoBehaviour
 
     public void Add(Item item)
     {
-        items.Add(item);
-        if (onItemChangedCallback != null) {
-            onItemChangedCallback.Invoke();
+        Item i = items.Find(invItem => item.name == invItem.name);
+        if (i == null) {
+            items.Add(item);
+            // items[-1].count = 1;
+            if (onItemChangedCallback != null) {
+                onItemChangedCallback.Invoke();
+            }
+        } else {
+            i.count += 1;
         }
     }
 
     public void Remove(Item item)
     {
-        items.Remove(item);
-        if (onItemChangedCallback != null) {
-            onItemChangedCallback.Invoke();
+        int count = item.count;
+        if (count == 1) {
+            items.Remove(item);
+            if (onItemChangedCallback != null) {
+                onItemChangedCallback.Invoke();
+            }
+        } else {
+            item.count -= 1;
         }
     }
 }
