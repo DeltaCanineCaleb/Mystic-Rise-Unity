@@ -1857,7 +1857,7 @@ MonoBehaviour:
   musicTracks:
   - name: Temo Village
     clip: {fileID: 8300000, guid: 8a13d71508ab3fc4598a0f58671c2783, type: 3}
-    volume: 1
+    volume: 0.61
     source: {fileID: 0}
   soundEffects:
   - name: Damage
