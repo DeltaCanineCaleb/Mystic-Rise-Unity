@@ -13,7 +13,7 @@ public class ItemPickup : MonoBehaviour
     void OnTriggerEnter2D()
     {
         Debug.Log("Picking up " + item.name);
-        Inventory.instance.Add(item);
+        Inventory.instance.AddItem(item);
         GameObject.Find("Audio Manager").GetComponent<AudioManager>().Play("Pickup Item");
         Destroy(gameObject);
     }

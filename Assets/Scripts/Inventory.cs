@@ -22,30 +22,30 @@ public class Inventory : MonoBehaviour
 
     public List<Item> items = new List<Item>();
 
-    public void Add(Item item)
+    public void AddItem(Item item)
     {
         Item i = items.Find(invItem => item.name == invItem.name);
-        if (i == null) {
+        if (i == null || !item.isStackable) {
+            item.count = 1;
             items.Add(item);
-            // items[-1].count = 1;
-            if (onItemChangedCallback != null) {
-                onItemChangedCallback.Invoke();
-            }
         } else {
             i.count += 1;
         }
+        if (onItemChangedCallback != null) {
+            onItemChangedCallback.Invoke();
+        }
     }
 
-    public void Remove(Item item)
+    public void RemoveItem(Item item)
     {
         int count = item.count;
         if (count == 1) {
             items.Remove(item);
-            if (onItemChangedCallback != null) {
-                onItemChangedCallback.Invoke();
-            }
         } else {
             item.count -= 1;
+        }
+        if (onItemChangedCallback != null) {
+            onItemChangedCallback.Invoke();
         }
     }
 }

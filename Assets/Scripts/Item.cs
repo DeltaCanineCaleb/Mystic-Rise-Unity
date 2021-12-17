@@ -8,6 +8,7 @@ public class Item : ScriptableObject
     public string description = "Lorem ipsum dolor sit amet, youreh motherum adipiscing elit, sed do";
     public string type = null;
     public int value = 0;
+    public bool isStackable = true;
     [HideInInspector]
     public int count = 1;
 

@@ -17,3 +17,5 @@ MonoBehaviour:
   description: Heals 10 HP.
   type: healing
   value: 10
+  isStackable: 1
+  count: 2

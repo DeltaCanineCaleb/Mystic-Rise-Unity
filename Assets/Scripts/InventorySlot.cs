@@ -18,7 +18,11 @@ public class InventorySlot : MonoBehaviour
         slot.SetActive(true);
         itemName.text = item.name;
         description.text = item.description;
-        amount.text = "x" + item.count;
+        if (item.isStackable) {
+            amount.text = "x" + item.count;
+        } else {
+            amount.text = "";
+        }
     }
 
     public void ClearSlot ()
@@ -34,7 +38,7 @@ public class InventorySlot : MonoBehaviour
     public void UseItem () {
         if (item != null) {
             item.Use();
-            Inventory.instance.Remove(item);
+            Inventory.instance.RemoveItem(item);
         }
     }
 }

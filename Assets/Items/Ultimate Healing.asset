@@ -17,3 +17,5 @@ MonoBehaviour:
   description: hi susie <3
   type: healing
   value: 1
+  isStackable: 0
+  count: 1
