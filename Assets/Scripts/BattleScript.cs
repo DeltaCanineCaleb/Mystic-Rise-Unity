@@ -87,6 +87,9 @@ public class BattleScript : MonoBehaviour
         // determine player turn order, based on speeds*
         // player goes first for now
         // choose funny battle start text depending on the enemy
+        audioManager.StopAll();
+        audioManager.Play("Battle Start");
+        audioManager.Play("Let's Go, Everyone!");
         battleText.text = turnOrder[1].GetComponent<Character>().characterName + " attacks!";
         // start the battle loop using the turn order
         StartCoroutine(PlayerTurn(turnOrder));
@@ -126,10 +129,14 @@ public class BattleScript : MonoBehaviour
         List<GameObject> rightTeam = separateTeams(turnOrder, "right");
         if (leftTeam.Count == 0) {
             stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+            audioManager.StopAll();
+            audioManager.Play("Temo Village");
             StopAllCoroutines();
             return true;
         } else if (rightTeam.Count == 0) {
             stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+            audioManager.StopAll();
+            audioManager.Play("Temo Village");
             StopAllCoroutines();
             return true;
         } else {
@@ -177,6 +184,8 @@ public class BattleScript : MonoBehaviour
                 battleText.text = turnOrder[0].GetComponent<Character>().characterName + " fled!";
                 yield return new WaitForSeconds(waitTime);
                 stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+                audioManager.StopAll();
+                audioManager.Play("Temo Village");
                 StopAllCoroutines();
             } else {
                 battleText.text = turnOrder[0].GetComponent<Character>().characterName + " tried to run, but couldn't get away!";

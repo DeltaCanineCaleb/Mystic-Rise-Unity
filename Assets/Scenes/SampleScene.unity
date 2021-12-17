@@ -1512,6 +1512,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battle HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 3506627974054072300, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4652698306236958912, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1857,20 +1861,44 @@ MonoBehaviour:
   musicTracks:
   - name: Temo Village
     clip: {fileID: 8300000, guid: 8a13d71508ab3fc4598a0f58671c2783, type: 3}
-    volume: 0.61
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Let's Go, Everyone!
+    clip: {fileID: 8300000, guid: 1def154e570ec4933bd6f9c78048b502, type: 3}
+    volume: 0.7
+    loop: 1
     source: {fileID: 0}
   soundEffects:
   - name: Damage
     clip: {fileID: 8300000, guid: 2addb8fe21a1844d6931c2abab2ddd21, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Crit Damage
     clip: {fileID: 8300000, guid: 49552d53cfd1d41d69a85902f69debea, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Null Damage
     clip: {fileID: 8300000, guid: 7b06d4a23d6c748fb90c0db8228ff2a2, type: 3}
     volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Battle Start
+    clip: {fileID: 8300000, guid: 8b42714a96e7d43ad9c374fe9a8c6f1b, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Pickup Item
+    clip: {fileID: 8300000, guid: a92f680f3385f4b7498764ec37f52f88, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Heal
+    clip: {fileID: 8300000, guid: 9aed1c88248e04bd79bc79a2d1cca3c0, type: 3}
+    volume: 1
+    loop: 0
     source: {fileID: 0}
 --- !u!4 &873474976
 Transform:
@@ -2968,6 +2996,7 @@ MonoBehaviour:
   itemsButton: {fileID: 1317749391}
   skillsButton: {fileID: 879354672}
   runButton: {fileID: 1332594178}
+  audioManager: {fileID: 0}
   runChance: 84
   waitTime: 1.25
 --- !u!1 &1511429071

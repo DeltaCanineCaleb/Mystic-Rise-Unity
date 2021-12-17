@@ -14,6 +14,7 @@ public class ItemPickup : MonoBehaviour
     {
         Debug.Log("Picking up " + item.name);
         Inventory.instance.Add(item);
+        GameObject.Find("Audio Manager").GetComponent<AudioManager>().Play("Pickup Item");
         Destroy(gameObject);
     }
 }

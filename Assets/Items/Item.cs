@@ -12,6 +12,7 @@ public class Item : ScriptableObject
     public virtual void Use() {
         Debug.Log("Using " + name);
         if (type == "healing") {
+            GameObject.Find("Audio Manager").GetComponent<AudioManager>().Play("Heal");
             Character player = GameObject.Find("Player").GetComponent<Character>();
             player.currentHP += value;
             if (player.currentHP > player.maxHP) {
