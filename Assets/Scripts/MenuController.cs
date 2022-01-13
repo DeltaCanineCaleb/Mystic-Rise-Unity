@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class MenuController : MonoBehaviour
+public class MenuController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject characterMenu;
     [SerializeField] private GameObject connectPanel; 
@@ -29,7 +29,7 @@ public class MenuController : MonoBehaviour
         characterMenu.SetActive(true);
     }
 
-    private void OnConnectedToMaster () {
+    public override void OnConnectedToMaster () {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
         Debug.Log("Connected");
     }
@@ -56,7 +56,7 @@ public class MenuController : MonoBehaviour
         PhotonNetwork.JoinOrCreateRoom(JoinGameInput.text, new RoomOptions() {}, TypedLobby.Default);
     }
 
-    private void OnJoinedRoom() {
+    public override void OnJoinedRoom() {
         PhotonNetwork.LoadLevel("MainGame");
     }
 }
