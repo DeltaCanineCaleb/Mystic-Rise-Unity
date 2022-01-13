@@ -18,29 +18,45 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject StartButton; 
 
     private string race;
+    private string gameVersion = "1.0";
 
     private void Awake() {
-        PhotonNetwork.ConnectUsingSettings(); 
-        
+        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.GameVersion = gameVersion;
     }
 
     private void Start() {
         characterMenu.SetActive(true);
     }
 
-    public void Update() {
-        if (characterMenu.activeSelf == true) {
-            race = RaceDropdownMenu.options[RaceDropdownMenu.value].text;
-            if (UsernameInput.text.Length >= 3 && race != "Select...") {
-                StartButton.GetComponent<Button>().interactable = true;
-            } else {
-                StartButton.GetComponent<Button>().interactable = false;
-            }
+    private void OnConnectedToMaster () {
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
+        Debug.Log("Connected");
+    }
+
+    public void ChangeCharacterInput () {
+        race = RaceDropdownMenu.options[RaceDropdownMenu.value].text;
+        if ((UsernameInput.text.Length >= 3 && UsernameInput.text.Length <= 16) && race != "Select...") {
+            StartButton.GetComponent<Button>().interactable = true;
+        } else {
+            StartButton.GetComponent<Button>().interactable = false;
         }
     }
 
-    private void OnConnectedToMaster() {
-        PhotonNetwork.JoinLobby(TypedLobby.Default);
-        Debug.Log("Connected");
+    public void SetCharacter () {
+        characterMenu.SetActive(false);
+        PhotonNetwork.LocalPlayer.NickName = UsernameInput.text + "/" + race;
+    }
+
+    public void CreateGame () {
+        PhotonNetwork.CreateRoom(CreateGameInput.text, new RoomOptions() {}, null);
+    }
+
+    public void JoinGame() {
+        PhotonNetwork.JoinOrCreateRoom(JoinGameInput.text, new RoomOptions() {}, TypedLobby.Default);
+    }
+
+    private void OnJoinedRoom() {
+        PhotonNetwork.LoadLevel("MainGame");
     }
 }
