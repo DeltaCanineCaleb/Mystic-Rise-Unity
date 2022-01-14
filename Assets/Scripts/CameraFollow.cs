@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    [HideInInspector]
     public Rigidbody2D player;
     public Transform cameraTransform;
     PlayerState stateEnum;
 
     void Start() {
-        stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+        GameObject gameManager = GameObject.Find("GameManager");
+        stateEnum = gameManager.GetComponent<PlayerState>();
+        player = gameManager.GetComponent<PlayerSpawner>().SpawnPlayer();
     }
 
     void LateUpdate()

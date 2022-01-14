@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 8233447737947784472}
   - component: {fileID: 7362691663786220776}
   - component: {fileID: 8085124012493692328}
-  - component: {fileID: 3265848779306203860}
+  - component: {fileID: 3182715578518362158}
   - component: {fileID: 7006225744281938456}
   m_Layer: 5
   m_Name: BattleHUD
@@ -473,7 +473,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3265848779306203860
+--- !u!114 &3182715578518362158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
