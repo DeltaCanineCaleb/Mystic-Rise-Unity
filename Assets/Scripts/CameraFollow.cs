@@ -1,7 +1,11 @@
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class CameraFollow : MonoBehaviour
+public class CameraFollow : MonoBehaviourPunCallbacks
 {
+    public PhotonView view;
+
     [HideInInspector]
     public GameObject player;
     Rigidbody2D playerRB;
@@ -9,10 +13,12 @@ public class CameraFollow : MonoBehaviour
     PlayerState stateEnum;
 
     void Awake() {
-        GameObject gameManager = GameObject.Find("GameManager");
-        stateEnum = gameManager.GetComponent<PlayerState>();
-        player = gameManager.GetComponent<PlayerSpawner>().SpawnPlayer();
-        playerRB = player.GetComponent<Rigidbody2D>();
+        if (view.IsMine) {
+            GameObject gameManager = GameObject.Find("GameManager");
+            stateEnum = gameManager.GetComponent<PlayerState>();
+            player = gameManager.GetComponent<PlayerSpawner>().SpawnPlayer();
+            playerRB = player.GetComponent<Rigidbody2D>();
+        }
     }
 
     void LateUpdate()

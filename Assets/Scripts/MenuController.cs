@@ -9,6 +9,7 @@ public class MenuController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject characterMenu;
     [SerializeField] private GameObject connectPanel; 
+    [SerializeField] private GameObject loadingScreen;
 
     [SerializeField] private InputField UsernameInput;
     [SerializeField] private Dropdown RaceDropdownMenu;
@@ -27,6 +28,17 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     private void Start() {
         characterMenu.SetActive(true);
+    }
+
+    void Update()
+    {
+        if (Input.GetKey("b")) {
+            race = "Dragonwolf";
+            PhotonNetwork.LocalPlayer.NickName = "Hunter/" + race;
+            loadingScreen.SetActive(true);
+            loadingScreen.transform.GetChild(1).gameObject.SetActive(true);
+            PhotonNetwork.CreateRoom("a", new RoomOptions() {}, null);
+        }
     }
 
     public override void OnConnectedToMaster () {
@@ -49,10 +61,12 @@ public class MenuController : MonoBehaviourPunCallbacks
     }
 
     public void CreateGame () {
+        loadingScreen.SetActive(true);
         PhotonNetwork.CreateRoom(CreateGameInput.text, new RoomOptions() {}, null);
     }
 
     public void JoinGame() {
+        loadingScreen.SetActive(true);
         PhotonNetwork.JoinOrCreateRoom(JoinGameInput.text, new RoomOptions() {}, TypedLobby.Default);
     }
 
