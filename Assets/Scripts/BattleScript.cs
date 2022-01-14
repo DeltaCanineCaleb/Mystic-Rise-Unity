@@ -32,6 +32,7 @@ public class BattleScript : MonoBehaviour
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
         audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
         cameraTransform = playerCamera.transform;
+        player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player;
     }
 
     void Update()
@@ -73,7 +74,7 @@ public class BattleScript : MonoBehaviour
             enemyOpponent.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
             turnOrder.Add(enemyOpponent);
         } else {
-            int enemyStation = 1;
+            int enemyStation = 2;
             foreach (var enemy in enemies)
             {
                 enemyOpponent = enemy;

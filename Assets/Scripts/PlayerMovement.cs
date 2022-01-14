@@ -3,12 +3,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public Transform battleStation;
     float speed;
+    Transform battleStation;
     PlayerState stateEnum;
 
     void Start() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+        battleStation = GameObject.Find("Main Camera").transform.GetChild(0).GetChild(0).transform;
     }
 
     // Update is called once per frame

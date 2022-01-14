@@ -16,7 +16,7 @@ public class Item : ScriptableObject
         Debug.Log("Using " + name);
         if (type == "healing") {
             GameObject.Find("Audio Manager").GetComponent<AudioManager>().Play("Heal");
-            Character player = GameObject.Find("Player").GetComponent<Character>();
+            Character player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player.GetComponent<Character>();
             player.currentHP += value;
             if (player.currentHP > player.maxHP) {
                 player.currentHP = player.maxHP;
