@@ -6,13 +6,12 @@ using Photon.Realtime;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
-    public GameObject PlayerPrefab;
     public Camera playerCamera;
     [HideInInspector]
     public GameObject player;
 
     public GameObject SpawnPlayer() {
-        player = Instantiate(PlayerPrefab, new Vector2(1f, -1f), Quaternion.identity);
+        player = PhotonNetwork.Instantiate("Player", new Vector2(1f, -1f), Quaternion.identity, 0);
         player.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
         return player;
     }
