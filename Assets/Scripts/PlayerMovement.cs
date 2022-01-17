@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(view.IsMine);
         if (view.IsMine) {
             PlayerState.CurrentPlayerState state = stateEnum.state;
             if (state == PlayerState.CurrentPlayerState.OVERWORLD) {

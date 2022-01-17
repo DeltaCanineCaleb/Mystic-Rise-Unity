@@ -62,7 +62,7 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     public void CreateGame () {
         loadingScreen.SetActive(true);
-        PhotonNetwork.CreateRoom(CreateGameInput.text, new RoomOptions() {}, null);
+        PhotonNetwork.CreateRoom(CreateGameInput.text, new RoomOptions() {}, TypedLobby.Default);
     }
 
     public void JoinGame() {
