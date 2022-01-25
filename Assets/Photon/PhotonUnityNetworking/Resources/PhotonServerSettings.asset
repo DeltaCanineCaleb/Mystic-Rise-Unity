@@ -20,14 +20,14 @@ MonoBehaviour:
     AppVersion: 1.0
     UseNameServer: 1
     FixedRegion: us
-    Server: 
+    Server: 127.0.0.1
     Port: 0
     ProxyServer: 
     Protocol: 0
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0
-    NetworkLogging: 0
+    NetworkLogging: 5
   DevRegion: 
   PunLogging: 2
   EnableSupportLogger: 0
