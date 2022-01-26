@@ -4,6 +4,7 @@ using Photon.Realtime;
 
 public class CameraFollow : MonoBehaviourPunCallbacks
 {
+    public GameObject playerPrefab;
     public PhotonView view;
 
     [HideInInspector]
@@ -16,7 +17,7 @@ public class CameraFollow : MonoBehaviourPunCallbacks
         if (view.IsMine) {
             GameObject gameManager = GameObject.Find("GameManager");
             stateEnum = gameManager.GetComponent<PlayerState>();
-            player = gameManager.GetComponent<PlayerSpawner>().SpawnPlayer();
+            player = gameManager.GetComponent<PlayerSpawner>().SpawnPlayer(playerPrefab);
             playerRB = player.GetComponent<Rigidbody2D>();
         }
     }

@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (view.IsMine) {
+        if (view.IsMine || !PhotonNetwork.IsConnected) {
             PlayerState.CurrentPlayerState state = stateEnum.state;
             if (state == PlayerState.CurrentPlayerState.OVERWORLD) {
                 if (Input.GetButton("Sprint")) {
