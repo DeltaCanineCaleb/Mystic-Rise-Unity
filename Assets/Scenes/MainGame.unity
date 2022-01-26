@@ -1286,6 +1286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adba95915992c41168417dcb6face216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 7507311132238585920, guid: 97d2b8a10dc586a4c99adb5407bfa60f, type: 3}
   view: {fileID: 519420033}
   player: {fileID: 0}
   cameraTransform: {fileID: 519420032}
@@ -2774,7 +2775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9650045739a1b44c93edf6d407c7808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 7507311132238585920, guid: 97d2b8a10dc586a4c99adb5407bfa60f, type: 3}
   playerCamera: {fileID: 519420031}
   player: {fileID: 0}
 --- !u!1 &1511429071
