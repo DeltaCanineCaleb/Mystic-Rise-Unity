@@ -1,4 +1,6 @@
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class UIHandler : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class UIHandler : MonoBehaviour
         PlayerState.CurrentPlayerState state = stateEnum.state;
         if (typeOfUI == "battle") {
             attachedUI.SetActive(state == PlayerState.CurrentPlayerState.BATTLE);
+        } else if (typeOfUI == "connection") {
+            attachedUI.SetActive(!PhotonNetwork.IsConnected);
         }
     }
 }
