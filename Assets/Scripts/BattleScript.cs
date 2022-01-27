@@ -17,6 +17,7 @@ public class BattleScript : MonoBehaviour
 
     public Text battleText;
     public GameObject panelOfButtons;
+    public GameObject itemsMenu;
     public Button attackButton;
     public Button itemsButton;
     public Button skillsButton;
@@ -24,6 +25,13 @@ public class BattleScript : MonoBehaviour
     Transform cameraTransform;
     [HideInInspector]
     public AudioManager audioManager;
+
+    // public Button invSlot1;
+    // public Button invSlot2;
+    // public Button invSlot3;
+    // public Button invSlot4;
+    // public Button invSlot5;
+    // public Button invSlot6;
 
     public int runChance;
     public float waitTime;
@@ -67,10 +75,10 @@ public class BattleScript : MonoBehaviour
         // instantiate enemy since no reference to them exists yet
         GameObject enemyOpponent;
         if (enemies[0] == null) {
-            enemyOpponent = Instantiate(characterPrefab, battleStations[1].transform.position, Quaternion.identity);
+            enemyOpponent = Instantiate(characterPrefab, battleStations[2].transform.position, Quaternion.identity);
             enemyOpponent.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
             turnOrder.Add(enemyOpponent);
-            enemyOpponent = Instantiate(characterPrefab, battleStations[2].transform.position, Quaternion.identity);
+            enemyOpponent = Instantiate(characterPrefab, battleStations[3].transform.position, Quaternion.identity);
             enemyOpponent.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
             turnOrder.Add(enemyOpponent);
         } else {
@@ -147,50 +155,27 @@ public class BattleScript : MonoBehaviour
 
     IEnumerator PlayerTurn(List<GameObject> turnOrder)
     {
-        if (battleText.text.Contains("damage")) {
-            battleText.text = "What will you do?";
-        }
-        panelOfButtons.SetActive(true);
-        var waitForButton = new WaitForUIButtons(attackButton, runButton);
-        GameObject target = separateTeams(turnOrder, "right")[0];
-        yield return waitForButton.Reset();
-        if (waitForButton.PressedButton == attackButton) {
-            panelOfButtons.SetActive(false);
-            if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
-                audioManager.Play("Damage");
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
-                target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
-                yield return new WaitForSeconds(waitTime);
-            } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
-                audioManager.Play("Null Damage");
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
-                yield return new WaitForSeconds(waitTime);
+        while (true) {
+            if (battleText.text.Contains("damage")) {
+                battleText.text = "What will you do?";
             }
-            // check for if anyone died
-            if (!checkDeath(turnOrder)) {
-                // move turnOrder
-                GameObject playerTurn = turnOrder[0];
-                turnOrder.RemoveAt(0);
-                turnOrder.Add(playerTurn);
-                if (turnOrder[0].GetComponent<Character>().team == "enemy") {
-                    StartCoroutine(CPUTurn(turnOrder));
-                } else {
-                    StartCoroutine(PlayerTurn(turnOrder));
+            panelOfButtons.SetActive(true);
+            var waitForButton = new WaitForUIButtons(attackButton, runButton, itemsButton);
+            GameObject target = separateTeams(turnOrder, "right")[0];
+            yield return waitForButton.Reset();
+            if (waitForButton.PressedButton == attackButton) {
+                panelOfButtons.SetActive(false);
+                if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
+                    audioManager.Play("Damage");
+                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
+                    target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
+                    yield return new WaitForSeconds(waitTime);
+                } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
+                    audioManager.Play("Null Damage");
+                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
+                    yield return new WaitForSeconds(waitTime);
                 }
-            }
-        } else if (waitForButton.PressedButton == runButton) {
-            int runRoll = RandomNumber(0,100);
-            panelOfButtons.SetActive(false);
-            if (runRoll <= runChance) {
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " fled!";
-                yield return new WaitForSeconds(waitTime);
-                stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
-                audioManager.StopAll();
-                audioManager.Play("Temo Village");
-                StopAllCoroutines();
-            } else {
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " tried to run, but couldn't get away!";
-                yield return new WaitForSeconds(waitTime);
+                // check for if anyone died
                 if (!checkDeath(turnOrder)) {
                     // move turnOrder
                     GameObject playerTurn = turnOrder[0];
@@ -202,6 +187,37 @@ public class BattleScript : MonoBehaviour
                         StartCoroutine(PlayerTurn(turnOrder));
                     }
                 }
+                break;
+            } else if (waitForButton.PressedButton == runButton) {
+                int runRoll = RandomNumber(0,100);
+                panelOfButtons.SetActive(false);
+                if (runRoll <= runChance) {
+                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " fled!";
+                    yield return new WaitForSeconds(waitTime);
+                    stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+                    audioManager.StopAll();
+                    audioManager.Play("Temo Village");
+                    StopAllCoroutines();
+                } else {
+                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " tried to run, but couldn't get away!";
+                    yield return new WaitForSeconds(waitTime);
+                    if (!checkDeath(turnOrder)) {
+                        // move turnOrder
+                        GameObject playerTurn = turnOrder[0];
+                        turnOrder.RemoveAt(0);
+                        turnOrder.Add(playerTurn);
+                        if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                            StartCoroutine(CPUTurn(turnOrder));
+                        } else {
+                            StartCoroutine(PlayerTurn(turnOrder));
+                        }
+                    }
+                }
+                break;
+            } else if (waitForButton.PressedButton == itemsButton) {
+                panelOfButtons.SetActive(false);
+                itemsMenu.SetActive(true);
+                var waitForItems = new WaitForUIButtons(itemsBackButton, invSlot1, invSlot2, invSlot3, invSlot4, invSlot5, invSlot6)
             }
         }
     }
