@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour
 {
-    Item item;
+    [HideInInspector]
+    public Item item;
     public Image icon;
     public GameObject slot;
     public Text itemName;

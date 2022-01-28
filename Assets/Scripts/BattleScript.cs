@@ -9,30 +9,31 @@ public class BattleScript : MonoBehaviour
 {
     public GameObject characterPrefab;
     public Transform[] battleStations;
-    public GameObject player;
     public Camera playerCamera;
-
-    PlayerState stateEnum;
-    PlayerState.CurrentPlayerState playerState;
-
     public Text battleText;
     public GameObject panelOfButtons;
     public GameObject itemsMenu;
+    [HideInInspector]
+    public GameObject player;
+
+    PlayerState stateEnum;
+    PlayerState.CurrentPlayerState playerState;
+    
     public Button attackButton;
     public Button itemsButton;
     public Button skillsButton;
     public Button runButton;
+    public Button itemsBackButton;
+    public Button invSlot1;
+    public Button invSlot2;
+    public Button invSlot3;
+    public Button invSlot4;
+    public Button invSlot5;
+    public Button invSlot6;
+
     Transform cameraTransform;
     [HideInInspector]
     public AudioManager audioManager;
-
-    // public Button invSlot1;
-    // public Button invSlot2;
-    // public Button invSlot3;
-    // public Button invSlot4;
-    // public Button invSlot5;
-    // public Button invSlot6;
-
     public int runChance;
     public float waitTime;
 
@@ -153,28 +154,85 @@ public class BattleScript : MonoBehaviour
         }
     }
 
+    int DamageCalculation(GameObject attacker, GameObject defender) {
+        int attack = attacker.GetComponent<Character>().attack;
+        int defense = defender.GetComponent<Character>().defense;
+        return attack - defense;
+    }
+
     IEnumerator PlayerTurn(List<GameObject> turnOrder)
     {
-        while (true) {
-            if (battleText.text.Contains("damage")) {
-                battleText.text = "What will you do?";
+        if (battleText.text.Contains("damage")) {
+            battleText.text = "What will you do?";
+        }
+        panelOfButtons.SetActive(true);
+        var waitForButton = new WaitForUIButtons(attackButton, runButton, itemsButton);
+        GameObject target = separateTeams(turnOrder, "right")[0];
+        yield return waitForButton.Reset();
+        if (waitForButton.PressedButton == attackButton) {
+            panelOfButtons.SetActive(false);
+            if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
+                audioManager.Play("Damage");
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target)) + " damage!";
+                target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target));
+                yield return new WaitForSeconds(waitTime);
+            } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
+                audioManager.Play("Null Damage");
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
+                yield return new WaitForSeconds(waitTime);
             }
-            panelOfButtons.SetActive(true);
-            var waitForButton = new WaitForUIButtons(attackButton, runButton, itemsButton);
-            GameObject target = separateTeams(turnOrder, "right")[0];
-            yield return waitForButton.Reset();
-            if (waitForButton.PressedButton == attackButton) {
-                panelOfButtons.SetActive(false);
-                if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
-                    audioManager.Play("Damage");
-                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
-                    target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
-                    yield return new WaitForSeconds(waitTime);
-                } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
-                    audioManager.Play("Null Damage");
-                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
-                    yield return new WaitForSeconds(waitTime);
+            // check for if anyone died
+            if (!checkDeath(turnOrder)) {
+                // move turnOrder
+                GameObject playerTurn = turnOrder[0];
+                turnOrder.RemoveAt(0);
+                turnOrder.Add(playerTurn);
+                if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                    StartCoroutine(CPUTurn(turnOrder));
+                } else {
+                    StartCoroutine(PlayerTurn(turnOrder));
                 }
+            }
+        } else if (waitForButton.PressedButton == runButton) {
+            int runRoll = RandomNumber(0,100);
+            panelOfButtons.SetActive(false);
+            if (runRoll <= runChance) {
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " fled!";
+                yield return new WaitForSeconds(waitTime);
+                stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+                audioManager.StopAll();
+                audioManager.Play("Temo Village");
+                StopAllCoroutines();
+            } else {
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " tried to run, but couldn't get away!";
+                yield return new WaitForSeconds(waitTime);
+                if (!checkDeath(turnOrder)) {
+                    // move turnOrder
+                    GameObject playerTurn = turnOrder[0];
+                    turnOrder.RemoveAt(0);
+                    turnOrder.Add(playerTurn);
+                    if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                        StartCoroutine(CPUTurn(turnOrder));
+                    } else {
+                        StartCoroutine(PlayerTurn(turnOrder));
+                    }
+                }
+            }
+        } else if (waitForButton.PressedButton == itemsButton) {
+            panelOfButtons.SetActive(false);
+            itemsMenu.SetActive(true);
+            var waitForItems = new WaitForUIButtons(itemsBackButton, invSlot1, invSlot2, invSlot3, invSlot4, invSlot5, invSlot6); 
+            yield return waitForItems.Reset();
+            if (waitForItems.PressedButton == itemsBackButton) {
+                panelOfButtons.SetActive(true);
+                itemsMenu.SetActive(false);
+            // I really wish I could optimize this code I hate it so much [legacy comment]
+            } else {
+                itemsMenu.SetActive(false);
+                string item = waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().item.name;
+                waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().UseItem();
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used a " + item + "!";
+                yield return new WaitForSeconds(waitTime);
                 // check for if anyone died
                 if (!checkDeath(turnOrder)) {
                     // move turnOrder
@@ -187,37 +245,6 @@ public class BattleScript : MonoBehaviour
                         StartCoroutine(PlayerTurn(turnOrder));
                     }
                 }
-                break;
-            } else if (waitForButton.PressedButton == runButton) {
-                int runRoll = RandomNumber(0,100);
-                panelOfButtons.SetActive(false);
-                if (runRoll <= runChance) {
-                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " fled!";
-                    yield return new WaitForSeconds(waitTime);
-                    stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
-                    audioManager.StopAll();
-                    audioManager.Play("Temo Village");
-                    StopAllCoroutines();
-                } else {
-                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " tried to run, but couldn't get away!";
-                    yield return new WaitForSeconds(waitTime);
-                    if (!checkDeath(turnOrder)) {
-                        // move turnOrder
-                        GameObject playerTurn = turnOrder[0];
-                        turnOrder.RemoveAt(0);
-                        turnOrder.Add(playerTurn);
-                        if (turnOrder[0].GetComponent<Character>().team == "enemy") {
-                            StartCoroutine(CPUTurn(turnOrder));
-                        } else {
-                            StartCoroutine(PlayerTurn(turnOrder));
-                        }
-                    }
-                }
-                break;
-            } else if (waitForButton.PressedButton == itemsButton) {
-                panelOfButtons.SetActive(false);
-                itemsMenu.SetActive(true);
-                var waitForItems = new WaitForUIButtons(itemsBackButton, invSlot1, invSlot2, invSlot3, invSlot4, invSlot5, invSlot6)
             }
         }
     }
@@ -227,8 +254,8 @@ public class BattleScript : MonoBehaviour
         GameObject target = separateTeams(turnOrder, "left")[0];
         if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
             audioManager.Play("Damage");
-            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense) + " damage!";
-            target.GetComponent<Character>().currentHP -= (turnOrder[0].GetComponent<Character>().attack - target.GetComponent<Character>().defense);
+            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target)) + " damage!";
+            target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target));
             yield return new WaitForSeconds(waitTime);
         } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
             audioManager.Play("Null Damage");
