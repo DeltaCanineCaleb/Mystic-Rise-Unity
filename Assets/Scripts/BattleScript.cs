@@ -226,12 +226,13 @@ public class BattleScript : MonoBehaviour
             if (waitForItems.PressedButton == itemsBackButton) {
                 panelOfButtons.SetActive(true);
                 itemsMenu.SetActive(false);
+                StartCoroutine(PlayerTurn(turnOrder));
             // I really wish I could optimize this code I hate it so much [legacy comment]
             } else {
                 itemsMenu.SetActive(false);
                 string item = waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().item.name;
                 waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().UseItem();
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used a " + item + "!";
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used a(n) " + item + "!";
                 yield return new WaitForSeconds(waitTime);
                 // check for if anyone died
                 if (!checkDeath(turnOrder)) {
