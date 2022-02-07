@@ -1,0 +1,3 @@
+This is a test dialogue
+It's only point is to test the feature
+-END-
