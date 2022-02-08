@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
                 // debug dialogue key ew
                 if (Input.GetKey("n")) {
-                    GameObject.Find("GameManager").GetComponent<DialogueHandler>().NewDialogue(1, "testDialogue");
+                    GameObject.Find("GameManager").GetComponent<DialogueHandler>().NewDialogue(0, "testDialogue");
                 }
             } else if (state == PlayerState.CurrentPlayerState.BATTLE) {
                 // set the player to their battle station wherever that is

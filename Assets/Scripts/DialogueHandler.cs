@@ -10,6 +10,8 @@ public class DialogueHandler : MonoBehaviour
 {
     public GameObject textbox;
     public Text textboxText;
+    public GameObject namebox;
+    public Text nameboxText;
     public TextAsset[] dialogueFiles;
 
     PlayerState stateEnum;
@@ -18,10 +20,24 @@ public class DialogueHandler : MonoBehaviour
     TextAsset file;
     string dialogue;
     List<string> dialogueLines;
+    string unparsedLine;
     int lineNumber;
 
     void Awake() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+    }
+
+    void ReadLine(int index) {
+        unparsedLine = dialogueLines[index];
+        if (unparsedLine.Contains(":")) {
+            nameboxText.text = unparsedLine.Split(":"[0])[0];
+            textboxText.text = unparsedLine.Split(":"[0])[1];
+            namebox.SetActive(true);
+        } else {
+            textboxText.text = unparsedLine;
+            namebox.SetActive(false);
+        }
+        
     }
 
     public void NewDialogue(int index, string textFile) {
@@ -32,16 +48,17 @@ public class DialogueHandler : MonoBehaviour
 
         textbox.SetActive(true);
         stateEnum.state = PlayerState.CurrentPlayerState.DIALOGUE;
-        textboxText.text = dialogueLines[index-1];
-        lineNumber = index-1;
+        ReadLine(index);
+        lineNumber = index;
     }
 
     public void NextLine() {
         lineNumber += 1;
         if (dialogueLines[lineNumber] != "-END-") {
-            textboxText.text = dialogueLines[lineNumber];
+            ReadLine(lineNumber);
         } else {
             textbox.SetActive(false);
+            namebox.SetActive(false);
             stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
         }
     }
