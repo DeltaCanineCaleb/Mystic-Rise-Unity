@@ -45,13 +45,26 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 } else {
                     rb.velocity = new Vector2(0f, rb.velocity.y);
                 }
+
+                // debug dialogue key ew
+                if (Input.GetKey("n")) {
+                    GameObject.Find("GameManager").GetComponent<DialogueHandler>().NewDialogue(1, "testDialogue");
+                }
             } else if (state == PlayerState.CurrentPlayerState.BATTLE) {
                 // set the player to their battle station wherever that is
                 rb.position = battleStation.position;
                 rb.velocity = new Vector2(0f, 0f);
             } else if (state == PlayerState.CurrentPlayerState.INVENTORY) {
                 rb.velocity = new Vector2(0f, 0f);
+            } else if (state == PlayerState.CurrentPlayerState.DIALOGUE) {
+                rb.velocity = new Vector2(0f, 0f);
             }
+        }
+    }
+
+    void Update() {
+        if (Input.GetButtonDown("AdvanceDialogue") && stateEnum.state == PlayerState.CurrentPlayerState.DIALOGUE) {
+            GameObject.Find("GameManager").GetComponent<DialogueHandler>().NextLine();
         }
     }
 }

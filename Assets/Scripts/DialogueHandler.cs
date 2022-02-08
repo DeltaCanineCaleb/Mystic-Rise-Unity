@@ -20,7 +20,11 @@ public class DialogueHandler : MonoBehaviour
     List<string> dialogueLines;
     int lineNumber;
 
-    void NewDialogue(int index, string textFile) {
+    void Awake() {
+        stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+    }
+
+    public void NewDialogue(int index, string textFile) {
         file = Array.Find(dialogueFiles, file => file.name == textFile);
         dialogue = file.text;
         dialogueLines = new List<string>();
@@ -29,10 +33,10 @@ public class DialogueHandler : MonoBehaviour
         textbox.SetActive(true);
         stateEnum.state = PlayerState.CurrentPlayerState.DIALOGUE;
         textboxText.text = dialogueLines[index-1];
-        lineNumber = index;
+        lineNumber = index-1;
     }
 
-    void NextLine() {
+    public void NextLine() {
         lineNumber += 1;
         if (dialogueLines[lineNumber] != "-END-") {
             textboxText.text = dialogueLines[lineNumber];
