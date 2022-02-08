@@ -1,5 +1,6 @@
-This is a test dialogue
-It's only point is to test the feature
+This is a test dialogue.
+It's only point is to test the feature.
 Caleb:Look how easy it is to edit too!
-Caleb:I'll probably add name support in a bit
+Caleb:I've already added name support, too.
+Caleb:Portrait support though?? :thinking:
 -END-
