@@ -11,12 +11,28 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     Transform battleStation;
     PlayerState stateEnum;
 
+    bool talk;
+    Collider2D window;
+
     void Start() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
         battleStation = GameObject.Find("Main Camera").transform.GetChild(0).GetChild(0).transform;
     }
+    
+    void OnTriggerEnter2D (Collider2D other) {
+        if (other.transform.CompareTag("DialogueWindow")) {
+            talk = true;
+            window = other;
+        }
+    }
 
-    // Update is called once per frame
+    void OnTriggerExit2D (Collider2D other) {
+        if (other.transform.CompareTag("DialogueWindow")) {
+            talk = false;
+            window = null;
+        }
+    }
+
     void FixedUpdate()
     {
         if (view.IsMine || !PhotonNetwork.IsConnected) {
@@ -65,6 +81,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     void Update() {
         if (Input.GetButtonDown("AdvanceDialogue") && stateEnum.state == PlayerState.CurrentPlayerState.DIALOGUE) {
             GameObject.Find("GameManager").GetComponent<DialogueHandler>().NextLine();
+        } else if (talk && Input.GetButtonDown("AdvanceDialogue")) {
+            DialogueTrigger dialogue = window.transform.GetComponent<DialogueTrigger>();
+            GameObject.Find("GameManager").GetComponent<DialogueHandler>().NewDialogue(dialogue.index, dialogue.file);
         }
     }
 }

@@ -1,0 +1,14 @@
+This Dragonwolf looks incredibly drunk.
+So much so that it seems he can hardly focus on staying upright.
+Better not to bother him. Dragonwolves are known to be aggressive.
+-END-
+
+Jerry:Ah, hello there. Welcome to Temo Village.
+Jerry:Not much to say about this place. It's got what you could need.
+Jerry:I'm already planning on moving out, though. 
+Jerry:Hopefully once the full game comes around, everything will be finalized for me to move.
+-END-
+// This is line 10
+
+The sign says "closed".
+-END-
