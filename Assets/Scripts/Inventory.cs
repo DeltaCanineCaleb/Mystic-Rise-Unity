@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
     #region Singleton
     // I have No Idea(tm) what this is at all
     public static Inventory instance;
+    public static int arcs;
 
     void Awake() {
         if (instance != null) {

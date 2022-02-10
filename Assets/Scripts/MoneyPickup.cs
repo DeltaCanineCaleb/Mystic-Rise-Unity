@@ -1,22 +1,23 @@
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+public class MoneyPickup : MonoBehaviour
 {
-    public Item item;
+    public Sprite icon;
     [HideInInspector]
     public SpriteRenderer sprite;
+    public int amount;
 
     void Start() 
     {
         sprite = this.GetComponent<SpriteRenderer>();
-        sprite.sprite = item.icon;
+        sprite.sprite = icon;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.CompareTag("Players")) {
-            Debug.Log("Picking up " + item.name);
-            Inventory.instance.AddItem(item);
+            Debug.Log("Picking up $" + amount);
+            Inventory.arcs += amount;
             GameObject.Find("Audio Manager").GetComponent<AudioManager>().Play("Pickup Item");
             Destroy(gameObject);
         }
