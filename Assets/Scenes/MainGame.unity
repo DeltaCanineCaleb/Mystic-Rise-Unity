@@ -1362,7 +1362,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &294293950 stripped
 RectTransform:
@@ -3672,7 +3672,7 @@ RectTransform:
   - {fileID: 1511429072}
   - {fileID: 1068275454}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8182,6 +8182,7 @@ MonoBehaviour:
   invSlot6: {fileID: 1463478962}
   audioManager: {fileID: 0}
   runChance: 84
+  critRate: 16
   waitTime: 1.25
 --- !u!114 &1492669193
 MonoBehaviour:
@@ -8839,7 +8840,7 @@ RectTransform:
   - {fileID: 1391766787}
   - {fileID: 1802538935}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9202,7 +9203,7 @@ RectTransform:
   - {fileID: 1478462304}
   - {fileID: 1274077962}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

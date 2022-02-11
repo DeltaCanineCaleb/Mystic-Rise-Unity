@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,7 @@ public class BattleScript : MonoBehaviour
     [HideInInspector]
     public AudioManager audioManager;
     public int runChance;
+    public int critRate;
     public float waitTime;
 
     void Awake() {
@@ -154,10 +156,34 @@ public class BattleScript : MonoBehaviour
         }
     }
 
-    int DamageCalculation(GameObject attacker, GameObject defender) {
+    int DamageCalculation(GameObject attacker, GameObject defender, bool isCrit) {
         int attack = attacker.GetComponent<Character>().attack;
         int defense = defender.GetComponent<Character>().defense;
-        return attack - defense;
+        if (isCrit) {
+            return Convert.ToInt32(attack*1.51) - defense;
+        } else {
+            return attack - defense;
+        }
+    }
+
+    IEnumerator Attack(List<GameObject> turnOrder, GameObject target) {
+        int runRoll = RandomNumber(0,critRate);
+        if (runRoll == critRate-1 && turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
+            audioManager.Play("Crit Damage");
+            battleText.text = "Critical hit! " + turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target, true)) + " damage!";
+            target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target, true));
+            yield return new WaitForSeconds(waitTime);
+        } else if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
+            audioManager.Play("Damage");
+            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target, false)) + " damage!";
+            target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target, false));
+            yield return new WaitForSeconds(waitTime);
+        } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
+            audioManager.Play("Null Damage");
+            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
+            yield return new WaitForSeconds(waitTime);
+        }
+        yield break;
     }
 
     IEnumerator PlayerTurn(List<GameObject> turnOrder)
@@ -171,16 +197,7 @@ public class BattleScript : MonoBehaviour
         yield return waitForButton.Reset();
         if (waitForButton.PressedButton == attackButton) {
             panelOfButtons.SetActive(false);
-            if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
-                audioManager.Play("Damage");
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target)) + " damage!";
-                target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target));
-                yield return new WaitForSeconds(waitTime);
-            } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
-                audioManager.Play("Null Damage");
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
-                yield return new WaitForSeconds(waitTime);
-            }
+            yield return StartCoroutine(Attack(turnOrder, target));
             // check for if anyone died
             if (!checkDeath(turnOrder)) {
                 // move turnOrder
@@ -253,16 +270,7 @@ public class BattleScript : MonoBehaviour
     IEnumerator CPUTurn(List<GameObject> turnOrder)
     {
         GameObject target = separateTeams(turnOrder, "left")[0];
-        if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
-            audioManager.Play("Damage");
-            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target)) + " damage!";
-            target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target));
-            yield return new WaitForSeconds(waitTime);
-        } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
-            audioManager.Play("Null Damage");
-            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
-            yield return new WaitForSeconds(waitTime);
-        }
+        yield return StartCoroutine(Attack(turnOrder, target));
         // check for if anyone died
         if (!checkDeath(turnOrder)) {
             // move turnOrder
