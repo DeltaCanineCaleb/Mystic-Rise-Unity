@@ -18,4 +18,5 @@ MonoBehaviour:
   type: healing
   value: 10
   isStackable: 1
+  cost: 5
   count: 2

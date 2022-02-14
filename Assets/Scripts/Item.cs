@@ -9,6 +9,7 @@ public class Item : ScriptableObject
     public string type = null;
     public int value = 0;
     public bool isStackable = true;
+    public int cost = 0;
     [HideInInspector]
     public int count = 1;
 

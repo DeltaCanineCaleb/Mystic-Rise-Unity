@@ -11,6 +11,7 @@ public class InventorySlot : MonoBehaviour
     public Text itemName;
     public Text description;
     public Text amount;
+    public bool isShop;
 
     public void AddItem (Item newItem)
     {
@@ -19,10 +20,14 @@ public class InventorySlot : MonoBehaviour
         slot.SetActive(true);
         itemName.text = item.name;
         description.text = item.description;
-        if (item.isStackable) {
-            amount.text = "x" + item.count;
+        if (isShop) {
+            amount.text = "$" + item.cost;
         } else {
-            amount.text = "";
+            if (item.isStackable) {
+                amount.text = "x" + item.count;
+            } else {
+                amount.text = "";
+            }
         }
     }
 
@@ -33,13 +38,24 @@ public class InventorySlot : MonoBehaviour
         slot.SetActive(false);
         itemName.text = "Item Name";
         description.text = "Lorem ipsum dolor sit amet, youreh motherum adipiscing elit, sed do";
-        amount.text = "x0";
+        if (isShop) {
+            amount.text = "$0";
+        } else {
+            amount.text = "x0";
+        }
     }
 
     public void UseItem () {
-        if (item != null) {
-            item.Use();
-            Inventory.instance.RemoveItem(item);
+        if (isShop) {
+            if (item.cost >= Inventory.arcs) {
+                Inventory.instance.AddItem(item);
+                Inventory.arcs -= item.cost;
+            }
+        } else {
+            if (item != null) {
+                item.Use();
+                Inventory.instance.RemoveItem(item);
+            }
         }
     }
 }
