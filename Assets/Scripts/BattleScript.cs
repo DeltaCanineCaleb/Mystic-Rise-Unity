@@ -160,7 +160,7 @@ public class BattleScript : MonoBehaviour
         int attack = attacker.GetComponent<Character>().attack;
         int defense = defender.GetComponent<Character>().defense;
         if (isCrit) {
-            return Convert.ToInt32(attack*1.51) - defense;
+            return Convert.ToInt32(attack*1.6) - defense;
         } else {
             return attack - defense;
         }
