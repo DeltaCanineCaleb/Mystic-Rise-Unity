@@ -4533,7 +4533,7 @@ GameObject:
   - component: {fileID: 848861467}
   - component: {fileID: 848861466}
   m_Layer: 5
-  m_Name: InventoryParent
+  m_Name: ShopParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10330,7 +10330,7 @@ GameObject:
   - component: {fileID: 1724274368}
   - component: {fileID: 1724274367}
   m_Layer: 5
-  m_Name: Inventory Title
+  m_Name: Shop Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
