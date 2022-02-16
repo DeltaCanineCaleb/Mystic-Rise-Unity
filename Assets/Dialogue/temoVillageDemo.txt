@@ -6,9 +6,17 @@ Better not to bother him. Red Dragonwolves are known to be aggressive.
 Jerry:Ah, hello there. Welcome to Temo Village.
 Jerry:Not much to say about this place. It's got what you could need.
 Jerry:I'm already planning on moving out, though. 
-Jerry:Hopefully once the full game comes around, everything will be finalized for me to move.
+Jerry:I've got my eyes on this one town they're building northwest of here.
 -END-
 // This is line 10
 
 The sign says "closed".
 -END-
+
+Yarne:Welcome to my stall. Had to rent this out while my store was being renovated.
+Yarne:Please, buy what you'd like.
+-SHOP-
+shopkeep:Yarne
+buymessage:Thank you for your purchase.~
+sell:apple
+-SHOP END-

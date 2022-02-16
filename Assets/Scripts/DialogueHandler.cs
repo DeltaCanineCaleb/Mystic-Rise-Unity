@@ -22,6 +22,7 @@ public class DialogueHandler : MonoBehaviour
     List<string> dialogueLines;
     string unparsedLine;
     int lineNumber;
+    bool shopGUI
 
     void Awake() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
@@ -54,12 +55,14 @@ public class DialogueHandler : MonoBehaviour
 
     public void NextLine() {
         lineNumber += 1;
-        if (dialogueLines[lineNumber] != "-END-") {
-            ReadLine(lineNumber);
-        } else {
+        if (dialogueLines[lineNumber] == "-END-") {
             textbox.SetActive(false);
             namebox.SetActive(false);
             stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+        } else if (dialogueLines[lineNumber] == "-SHOP-") {
+            // do the shop parsing thing
+        } else {
+            ReadLine(lineNumber);
         }
     }
 }
