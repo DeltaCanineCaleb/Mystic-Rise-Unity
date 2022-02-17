@@ -17,6 +17,8 @@ Yarne:Welcome to my stall. Had to rent this out while my store was being renovat
 Yarne:Please, buy what you'd like.
 -SHOP-
 shopkeep:Yarne
+openmessage:Take a look around, stay awhile.
 buymessage:Thank you for your purchase.~
+poormessage:Thank y- Oh, you can't afford that. Come back later with more money.
 sell:apple
 -SHOP END-

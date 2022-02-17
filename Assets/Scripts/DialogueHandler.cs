@@ -12,6 +12,8 @@ public class DialogueHandler : MonoBehaviour
     public Text textboxText;
     public GameObject namebox;
     public Text nameboxText;
+    public Text shopTextboxText;
+    public Text shopNameboxText;
     public TextAsset[] dialogueFiles;
 
     PlayerState stateEnum;
@@ -22,7 +24,7 @@ public class DialogueHandler : MonoBehaviour
     List<string> dialogueLines;
     string unparsedLine;
     int lineNumber;
-    bool shopGUI
+    bool shopGUI;
 
     void Awake() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
@@ -54,15 +56,46 @@ public class DialogueHandler : MonoBehaviour
     }
 
     public void NextLine() {
-        lineNumber += 1;
-        if (dialogueLines[lineNumber] == "-END-") {
-            textbox.SetActive(false);
-            namebox.SetActive(false);
-            stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
-        } else if (dialogueLines[lineNumber] == "-SHOP-") {
-            // do the shop parsing thing
-        } else {
-            ReadLine(lineNumber);
+        if (shopGUI) {
+            lineNumber += 1;
+            if (dialogueLines[lineNumber] == "-END-") {
+                textbox.SetActive(false);
+                namebox.SetActive(false);
+                stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+            } else if (dialogueLines[lineNumber] == "-SHOP-") {
+                shopGUI = true;
+                while (true) {
+                    lineNumber += 1;
+                    if (dialogueLines[lineNumber] == "-SHOP END-") {
+                        break;
+                    }
+                    unparsedLine = dialogueLines[lineNumber];
+                    String type = unparsedLine.Split(":"[0])[0];
+                    String argument = unparsedLine.Split(":"[0])[1];
+                    switch (type) {
+                        case "shopkeep":
+                            shopNameboxText.text = argument;
+                            break;
+                        case "openmessage":
+                            shopTextboxText.text = argument;
+                            break;
+                        case "buymessage":
+                            // store as a string, call back to when an item is bought
+                            Debug.Log("among us");
+                            break;
+                        case "sell":
+                            // add to a list, parse through list at end to have it all display
+                            Debug.Log("among us");
+                            break;
+                        default:
+                            // in case something breaks and nothing actually happens
+                            Debug.Log("when the impostor is sus");
+                            break;
+                    }
+                }
+            } else {
+                ReadLine(lineNumber);
+            }
         }
     }
 }
