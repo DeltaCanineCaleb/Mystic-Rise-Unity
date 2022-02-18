@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
 
@@ -19,6 +20,10 @@ public class DialogueHandler : MonoBehaviour
     PlayerState stateEnum;
     PlayerState.CurrentPlayerState playerState;
 
+    string buyDialogue;
+    string poorDialogue;
+    List<Item> shopStock;
+
     TextAsset file;
     string dialogue;
     List<string> dialogueLines;
@@ -28,6 +33,14 @@ public class DialogueHandler : MonoBehaviour
 
     void Awake() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+    }
+
+    // ?????
+    [MenuItem("AssetDatabase/LoadAssetExample")]
+    
+    static Item AddItemToStock(string argument) {
+        Item item = (Item)AssetDatabase.LoadAssetAtPath("Assets/Items/" + argument, typeof(Item));
+        return item;
     }
 
     void ReadLine(int index) {
@@ -80,12 +93,14 @@ public class DialogueHandler : MonoBehaviour
                             shopTextboxText.text = argument;
                             break;
                         case "buymessage":
-                            // store as a string, call back to when an item is bought
-                            Debug.Log("among us");
+                            buyDialogue = argument;
+                            break;
+                        case "poormessage":
+                            poorDialogue = argument;
                             break;
                         case "sell":
-                            // add to a list, parse through list at end to have it all display
-                            Debug.Log("among us");
+                            Item item = AddItemToStock(argument);
+                            shopStock.Add(item);
                             break;
                         default:
                             // in case something breaks and nothing actually happens
