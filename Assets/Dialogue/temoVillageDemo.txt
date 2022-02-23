@@ -20,5 +20,5 @@ shopkeep:Yarne
 openmessage:Take a look around, stay awhile.
 buymessage:Thank you for your purchase.~
 poormessage:Thank y- Oh, you can't afford that. Come back later with more money.
-sell:apple
+sell:Apple
 -SHOP END-

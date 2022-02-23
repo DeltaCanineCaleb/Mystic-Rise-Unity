@@ -15,6 +15,7 @@ public class DialogueHandler : MonoBehaviour
     public Text nameboxText;
     public Text shopTextboxText;
     public Text shopNameboxText;
+    public GameObject shop;
     public TextAsset[] dialogueFiles;
 
     PlayerState stateEnum;
@@ -22,7 +23,7 @@ public class DialogueHandler : MonoBehaviour
 
     string buyDialogue;
     string poorDialogue;
-    List<Item> shopStock;
+    List<Item> shopStock = new List<Item>();
 
     TextAsset file;
     string dialogue;
@@ -34,13 +35,15 @@ public class DialogueHandler : MonoBehaviour
     void Awake() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
     }
-
-    // ?????
-    [MenuItem("AssetDatabase/LoadAssetExample")]
     
-    static Item AddItemToStock(string argument) {
-        Item item = (Item)AssetDatabase.LoadAssetAtPath("Assets/Items/" + argument, typeof(Item));
-        return item;
+    Item AddItemToStock(string argument) {
+        Item[] items = Resources.LoadAll<Item>("Items");
+        foreach (var item in items) {
+            if (item.name == argument) {
+                return item;
+            }
+        }
+        return null;
     }
 
     void ReadLine(int index) {
@@ -69,7 +72,7 @@ public class DialogueHandler : MonoBehaviour
     }
 
     public void NextLine() {
-        if (shopGUI) {
+        if (!shopGUI) {
             lineNumber += 1;
             if (dialogueLines[lineNumber] == "-END-") {
                 textbox.SetActive(false);
@@ -108,6 +111,9 @@ public class DialogueHandler : MonoBehaviour
                             break;
                     }
                 }
+                textbox.SetActive(false);
+                namebox.SetActive(false);
+                shop.SetActive(true);
             } else {
                 ReadLine(lineNumber);
             }
