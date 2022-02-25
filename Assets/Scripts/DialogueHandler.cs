@@ -17,13 +17,15 @@ public class DialogueHandler : MonoBehaviour
     public Text shopNameboxText;
     public GameObject shop;
     public TextAsset[] dialogueFiles;
+    public Button exitButton;
 
     PlayerState stateEnum;
     PlayerState.CurrentPlayerState playerState;
 
     string buyDialogue;
     string poorDialogue;
-    List<Item> shopStock = new List<Item>();
+    [HideInInspector]
+    public List<Item> shopStock = new List<Item>();
 
     TextAsset file;
     string dialogue;
@@ -71,13 +73,14 @@ public class DialogueHandler : MonoBehaviour
         lineNumber = index;
     }
 
-    public void NextLine() {
+    public IEnumerator NextLine() {
         if (!shopGUI) {
             lineNumber += 1;
             if (dialogueLines[lineNumber] == "-END-") {
                 textbox.SetActive(false);
                 namebox.SetActive(false);
                 stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+                StopAllCoroutines();
             } else if (dialogueLines[lineNumber] == "-SHOP-") {
                 shopGUI = true;
                 while (true) {
@@ -111,9 +114,18 @@ public class DialogueHandler : MonoBehaviour
                             break;
                     }
                 }
+                GameObject.Find("DialogueUI").transform.GetChild(2).gameObject.GetComponent<InventoryUI>().UpdateUI();
                 textbox.SetActive(false);
                 namebox.SetActive(false);
                 shop.SetActive(true);
+                var waitForExit = new WaitForUIButtons(exitButton);
+                yield return waitForExit.Reset();
+                if (waitForExit.PressedButton == exitButton) {
+                    textbox.SetActive(true);
+                    shop.SetActive(false);
+                    lineNumber += 1;
+                    ReadLine(lineNumber);
+                }
             } else {
                 ReadLine(lineNumber);
             }

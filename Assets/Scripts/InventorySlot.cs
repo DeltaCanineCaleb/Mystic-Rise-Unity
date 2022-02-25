@@ -47,7 +47,7 @@ public class InventorySlot : MonoBehaviour
 
     public void UseItem () {
         if (isShop) {
-            if (item.cost >= Inventory.arcs) {
+            if (item.cost <= Inventory.arcs) {
                 Inventory.instance.AddItem(item);
                 Inventory.arcs -= item.cost;
             }

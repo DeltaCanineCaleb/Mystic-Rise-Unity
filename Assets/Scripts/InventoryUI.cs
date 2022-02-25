@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class InventoryUI : MonoBehaviour
     public GameObject inventoryUI;
     public Text moneyText;
     public bool accessAtWill;
+    public bool isShop;
 
     PlayerState stateEnum;
     PlayerState.CurrentPlayerState playerState;
@@ -15,7 +18,6 @@ public class InventoryUI : MonoBehaviour
 
     InventorySlot[] slots;
 
-    // Start is called before the first frame update
     void Start()
     {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
@@ -43,14 +45,24 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    void UpdateUI()
+    public void UpdateUI()
     {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (i < inventory.items.Count) {
-                slots[i].AddItem(inventory.items[i]);
-            } else {
-                slots[i].ClearSlot();
+        if (!isShop) {
+            for (int i = 0; i < slots.Length; i++) {
+                if (i < inventory.items.Count) {
+                    slots[i].AddItem(inventory.items[i]);
+                } else {
+                    slots[i].ClearSlot();
+                }
+            }
+        } else {
+            List<Item> shopStock = GameObject.Find("GameManager").GetComponent<DialogueHandler>().shopStock;
+            for (int i = 0; i < slots.Length; i++) {
+                if (i < shopStock.Count) {
+                    slots[i].AddItem(shopStock[i]);
+                } else {
+                    slots[i].ClearSlot();
+                }
             }
         }
     }

@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     void Update() {
         if (Input.GetButtonDown("AdvanceDialogue") && stateEnum.state == PlayerState.CurrentPlayerState.DIALOGUE) {
-            GameObject.Find("GameManager").GetComponent<DialogueHandler>().NextLine();
+            StartCoroutine(GameObject.Find("GameManager").GetComponent<DialogueHandler>().NextLine());
         } else if (talk && Input.GetButtonDown("AdvanceDialogue")) {
             DialogueTrigger dialogue = window.transform.GetComponent<DialogueTrigger>();
             GameObject.Find("GameManager").GetComponent<DialogueHandler>().NewDialogue(dialogue.index, dialogue.file);

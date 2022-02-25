@@ -620,6 +620,7 @@ GameObject:
   - component: {fileID: 104022840}
   - component: {fileID: 104022842}
   - component: {fileID: 104022841}
+  - component: {fileID: 104022843}
   m_Layer: 5
   m_Name: Exit Button
   m_TagString: Untagged
@@ -685,6 +686,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104022839}
   m_CullTransparentMesh: 1
+--- !u!114 &104022843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104022839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 104022841}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &115026338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,6 +2038,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &391212891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391212892}
+  m_Layer: 0
+  m_Name: The Shop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &391212892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391212891}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1616329360}
+  - {fileID: 773799231}
+  m_Father: {fileID: 1433537671}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &392381262
 GameObject:
   m_ObjectHideFlags: 0
@@ -4642,7 +4719,7 @@ RectTransform:
   - {fileID: 1101035448}
   - {fileID: 1724274366}
   - {fileID: 104022840}
-  m_Father: {fileID: 1433537671}
+  m_Father: {fileID: 391212892}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -8951,7 +9028,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1433537671
 Transform:
   m_ObjectHideFlags: 0
@@ -8963,8 +9040,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1616329360}
-  - {fileID: 773799231}
+  - {fileID: 391212892}
   m_Father: {fileID: 1711761461}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8981,9 +9057,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsParent: {fileID: 848861465}
-  inventoryUI: {fileID: 773799230}
+  inventoryUI: {fileID: 391212891}
   moneyText: {fileID: 1101035449}
   accessAtWill: 0
+  isShop: 1
 --- !u!114 &1463478962 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 37648191300743689, guid: 38410d5b8ae0b48e5aa12a3d257deb9b, type: 3}
@@ -9528,10 +9605,12 @@ MonoBehaviour:
   nameboxText: {fileID: 1333445165}
   shopTextboxText: {fileID: 354539834}
   shopNameboxText: {fileID: 1155327625}
-  shop: {fileID: 1433537670}
+  shop: {fileID: 391212891}
   dialogueFiles:
   - {fileID: 4900000, guid: 330243b8ae06d464289123b966df6283, type: 3}
   - {fileID: 4900000, guid: 80e88f7bc18b041ac8d1d5239d926d45, type: 3}
+  exitButton: {fileID: 104022843}
+  shopStock: []
 --- !u!1 &1493179145
 GameObject:
   m_ObjectHideFlags: 0
@@ -10170,6 +10249,7 @@ MonoBehaviour:
   inventoryUI: {fileID: 1802538934}
   moneyText: {fileID: 483524039}
   accessAtWill: 1
+  isShop: 0
 --- !u!114 &1598357320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10186,6 +10266,7 @@ MonoBehaviour:
   inventoryUI: {fileID: 1068275453}
   moneyText: {fileID: 0}
   accessAtWill: 0
+  isShop: 0
 --- !u!114 &1604014736 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5650256917447031186, guid: 38410d5b8ae0b48e5aa12a3d257deb9b, type: 3}
@@ -10227,7 +10308,7 @@ RectTransform:
   m_Children:
   - {fileID: 1045965077}
   - {fileID: 2017498336}
-  m_Father: {fileID: 1433537671}
+  m_Father: {fileID: 391212892}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -10577,7 +10658,7 @@ GameObject:
   - component: {fileID: 1711761459}
   - component: {fileID: 1711761458}
   m_Layer: 5
-  m_Name: Dialogue UI
+  m_Name: DialogueUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
