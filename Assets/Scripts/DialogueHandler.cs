@@ -17,7 +17,6 @@ public class DialogueHandler : MonoBehaviour
     public Text shopNameboxText;
     public GameObject shop;
     public TextAsset[] dialogueFiles;
-    public Button exitButton;
 
     PlayerState stateEnum;
     PlayerState.CurrentPlayerState playerState;
@@ -73,14 +72,23 @@ public class DialogueHandler : MonoBehaviour
         lineNumber = index;
     }
 
-    public IEnumerator NextLine() {
+    public void ShopButton() {
+        StartCoroutine(NextLine(true));
+    }
+
+    public IEnumerator NextLine(bool exitButton = false) {
+        if (exitButton) {
+            textbox.SetActive(true);
+            shop.SetActive(false);
+            shopGUI = false;
+        }
         if (!shopGUI) {
             lineNumber += 1;
             if (dialogueLines[lineNumber] == "-END-") {
                 textbox.SetActive(false);
                 namebox.SetActive(false);
                 stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
-                StopAllCoroutines();
+                yield break;
             } else if (dialogueLines[lineNumber] == "-SHOP-") {
                 shopGUI = true;
                 while (true) {
@@ -114,21 +122,14 @@ public class DialogueHandler : MonoBehaviour
                             break;
                     }
                 }
-                GameObject.Find("DialogueUI").transform.GetChild(2).gameObject.GetComponent<InventoryUI>().UpdateUI();
+                GameObject.Find("Inventory + Dialogue UI").transform.GetChild(4).gameObject.GetComponent<InventoryUI>().UpdateUI();
                 textbox.SetActive(false);
                 namebox.SetActive(false);
                 shop.SetActive(true);
-                var waitForExit = new WaitForUIButtons(exitButton);
-                yield return waitForExit.Reset();
-                if (waitForExit.PressedButton == exitButton) {
-                    textbox.SetActive(true);
-                    shop.SetActive(false);
-                    lineNumber += 1;
-                    ReadLine(lineNumber);
-                }
             } else {
                 ReadLine(lineNumber);
             }
         }
+        yield break;
     }
 }
