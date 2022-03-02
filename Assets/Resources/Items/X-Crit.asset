@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 028f3c40c17104984989418cb70b7e85, type: 3}
-  m_Name: Apple
+  m_Name: X-Crit
   m_EditorClassIdentifier: 
-  name: Apple
-  icon: {fileID: 21300000, guid: daf04f9ef5775dc4ca2ab4a8a80fbf20, type: 3}
-  description: Heals 10 HP.
-  type: healing
-  value: 10
+  name: X-Crit
+  icon: {fileID: 21300000, guid: a6701508c05344cf49074f855a48e3e1, type: 3}
+  description: Increases your critical hit rate.
+  type: buff
+  value: 1
   isStackable: 1
-  cost: 10
-  count: 10
+  cost: 25
+  count: 1

@@ -1,6 +1,6 @@
 This Dragonwolf looks incredibly drunk.
-So much so that it seems he can hardly focus on staying upright.
-Better not to bother him. Red Dragonwolves are known to be aggressive.
+So much so that it seems he can hardly focus on staying upright, much less a conversation.
+You shouldn't steal from him. Red Dragonwolves are known to be aggressive.
 -END-
 
 Jerry:Ah, hello there. Welcome to Temo Village.
@@ -10,7 +10,7 @@ Jerry:I've got my eyes on this one town they're building northwest of here.
 -END-
 // This is line 10
 
-The sign says "closed".
+The sign says "closed". Seems like someone bought out this stall but isn't using it.
 -END-
 
 Yarne:Welcome to my stall. Had to rent this out while my store was being renovated.
@@ -21,5 +21,12 @@ openmessage:Take a look around, stay a while.
 buymessage:Thank you for your purchase.~
 poormessage:Thank y- Oh, you can't afford that. Come back later with more money.
 sell:Apple
+sell:X-Crit
+sell:Lumine Tome I
 -SHOP END-
 Yarne:Come again!
+-END-
+// This is line 28
+
+The sign says "closed". Seems like there aren't enough items coded in the game for this shop to be functional.
+-END-
