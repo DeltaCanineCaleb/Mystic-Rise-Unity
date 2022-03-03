@@ -39,6 +39,15 @@ public class BattleScript : MonoBehaviour
     public int critRate;
     public float waitTime;
 
+    string ifVowel(String checkString) {
+        char letter = checkString.ToLower()[0];
+        if (letter == "a"[0] || letter == "e"[0] || letter == "i"[0] || letter == "o"[0] || letter == "u"[0] || letter == "x"[0]) {
+            return "n";
+        } else {
+            return "";
+        }
+    }
+
     void Awake() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
         audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
@@ -249,7 +258,7 @@ public class BattleScript : MonoBehaviour
                 itemsMenu.SetActive(false);
                 string item = waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().item.name;
                 waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().UseItem();
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used a(n) " + item + "!";
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used a" + ifVowel(item) + " " + item + "!";
                 yield return new WaitForSeconds(waitTime);
                 // check for if anyone died
                 if (!checkDeath(turnOrder)) {
