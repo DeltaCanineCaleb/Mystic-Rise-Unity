@@ -13,6 +13,23 @@ public class InventorySlot : MonoBehaviour
     public Text amount;
     public bool isShop;
 
+    PlayerState stateEnum;
+
+    bool itemUsable(Item item) {
+        PlayerState.CurrentPlayerState state = stateEnum.state;
+        if (item.type.Contains("buff") && state != PlayerState.CurrentPlayerState.BATTLE) {
+            return false;
+        } else if (item.type == "skill" && state != PlayerState.CurrentPlayerState.INVENTORY) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    void Start() {
+        stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
+    }
+
     public void AddItem (Item newItem)
     {
         item = newItem;
@@ -52,7 +69,7 @@ public class InventorySlot : MonoBehaviour
                 Inventory.arcs -= item.cost;
             }
         } else {
-            if (item != null) {
+            if (item != null && itemUsable(item)) {
                 item.Use();
                 Inventory.instance.RemoveItem(item);
             }

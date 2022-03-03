@@ -23,7 +23,11 @@ public class Item : ScriptableObject
                 player.currentHP = player.maxHP;
             }
             Debug.Log("Healed " + value + " HP, now at " + player.currentHP + "/" + player.maxHP);
+        } else if (type.Contains("buff")) {
+            // format will be buff, [stat to buff]
+            Character player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player.GetComponent<Character>();
+        } else if (type == "skill") {
+            Character player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player.GetComponent<Character>();
         }
-       
     }
 }
