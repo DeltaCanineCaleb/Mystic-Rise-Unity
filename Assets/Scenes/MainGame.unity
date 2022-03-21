@@ -606,7 +606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6356301518887187158, guid: f281475015d6fe24981ef000fc2817b7, type: 3}
       propertyPath: m_Name
-      value: Apple (5)
+      value: X-Crit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f281475015d6fe24981ef000fc2817b7, type: 3}
