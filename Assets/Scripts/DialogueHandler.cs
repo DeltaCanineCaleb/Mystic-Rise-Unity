@@ -65,7 +65,9 @@ public class DialogueHandler : MonoBehaviour
         dialogue = file.text;
         dialogueLines = new List<string>();
         dialogueLines.AddRange(dialogue.Split("\n"[0]));
-
+        for (int i = 0; i < dialogueLines.Count; i++) {
+            dialogueLines[i] = dialogueLines[i].Trim();
+        }
         textbox.SetActive(true);
         stateEnum.state = PlayerState.CurrentPlayerState.DIALOGUE;
         ReadLine(index);
