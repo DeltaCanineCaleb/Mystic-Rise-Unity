@@ -575,7 +575,7 @@ PrefabInstance:
     - target: {fileID: 6356301518887187154, guid: f281475015d6fe24981ef000fc2817b7, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 11400000, guid: b85ccbef5af5947888b74c00d87976d6, type: 2}
+      objectReference: {fileID: 11400000, guid: 4eb9cfc2d2b274be8833311a9a15c6c2, type: 2}
     - target: {fileID: 6356301518887187156, guid: f281475015d6fe24981ef000fc2817b7, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -14625,7 +14625,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7189444174171110257, guid: 1b38dca8bc6dd4487be2a77f8168c0e8, type: 3}
       propertyPath: amount
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7189444174171110261, guid: 1b38dca8bc6dd4487be2a77f8168c0e8, type: 3}
       propertyPath: m_Name

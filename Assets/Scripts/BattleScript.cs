@@ -149,13 +149,7 @@ public class BattleScript : MonoBehaviour
         }
         List<GameObject> leftTeam = separateTeams(turnOrder, "left");
         List<GameObject> rightTeam = separateTeams(turnOrder, "right");
-        if (leftTeam.Count == 0) {
-            stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
-            audioManager.StopAll();
-            audioManager.Play("Temo Village");
-            StopAllCoroutines();
-            return true;
-        } else if (rightTeam.Count == 0) {
+        if (leftTeam.Count == 0 || rightTeam.Count == 0) {
             stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
             audioManager.StopAll();
             audioManager.Play("Temo Village");
