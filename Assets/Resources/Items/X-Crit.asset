@@ -15,7 +15,7 @@ MonoBehaviour:
   name: X-Crit
   icon: {fileID: 21300000, guid: a6701508c05344cf49074f855a48e3e1, type: 3}
   description: Increases your critical hit rate.
-  type: buff
+  type: buff, crit
   value: 1
   isStackable: 1
   cost: 25

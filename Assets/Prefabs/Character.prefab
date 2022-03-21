@@ -254,6 +254,7 @@ MonoBehaviour:
   maxHP: 15
   team: enemy
   battleHUD: {fileID: 274066013306581051}
+  critRate: 1
 --- !u!114 &8879824645586275521
 MonoBehaviour:
   m_ObjectHideFlags: 0

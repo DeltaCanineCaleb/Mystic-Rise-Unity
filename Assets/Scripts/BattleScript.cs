@@ -101,6 +101,7 @@ public class BattleScript : MonoBehaviour
                 cameraTransform.position = new Vector3(enemyOpponent.transform.position.x, enemyOpponent.transform.position.y, -10f);
                 enemyOpponent.transform.position = battleStations[enemyStation].transform.position;
                 enemyOpponent.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                enemyOpponent.GetComponent<Character>().critRate = 1;
                 turnOrder.Add(enemyOpponent);
                 enemyStation += 1;
             }
@@ -176,8 +177,8 @@ public class BattleScript : MonoBehaviour
     }
 
     IEnumerator Attack(List<GameObject> turnOrder, GameObject target) {
-        int runRoll = RandomNumber(0,critRate);
-        if (runRoll == critRate-1 && turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
+        int runRoll = RandomNumber(0,16);
+        if (runRoll < turnOrder[0].GetComponent<Character>().critRate && turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
             audioManager.Play("Crit Damage");
             battleText.text = "Critical hit! " + turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target, true)) + " damage!";
             target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target, true));
@@ -197,7 +198,7 @@ public class BattleScript : MonoBehaviour
 
     IEnumerator PlayerTurn(List<GameObject> turnOrder)
     {
-        if (battleText.text.Contains("damage")) {
+        if (battleText.text.Contains("damage") || battleText.text.Contains("used")) {
             battleText.text = "What will you do?";
         }
         panelOfButtons.SetActive(true);

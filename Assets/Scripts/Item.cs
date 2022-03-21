@@ -26,6 +26,9 @@ public class Item : ScriptableObject
         } else if (type.Contains("buff")) {
             // format will be buff, [stat to buff]
             Character player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player.GetComponent<Character>();
+            if (type.Contains("crit")) {
+                player.critRate *= 2;
+            }
         } else if (type == "skill") {
             Character player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player.GetComponent<Character>();
         }

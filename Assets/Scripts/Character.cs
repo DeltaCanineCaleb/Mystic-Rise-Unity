@@ -13,6 +13,7 @@ public class Character : MonoBehaviour
     public int maxHP;
     public string team;
     public GameObject battleHUD;
+    public int critRate;
 
     void Start()
     {
