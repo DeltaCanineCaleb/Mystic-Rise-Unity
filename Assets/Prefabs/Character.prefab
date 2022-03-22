@@ -255,6 +255,8 @@ MonoBehaviour:
   team: enemy
   battleHUD: {fileID: 274066013306581051}
   critRate: 1
+  dropMoney: 4
+  dropItems: '-'
 --- !u!114 &8879824645586275521
 MonoBehaviour:
   m_ObjectHideFlags: 0

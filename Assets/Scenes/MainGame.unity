@@ -2681,6 +2681,14 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4652698306236958917, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
+      propertyPath: dropItems
+      value: '-'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652698306236958917, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
+      propertyPath: dropMoney
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652698306236958917, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
       propertyPath: characterName
       value: Training Dummy
       objectReference: {fileID: 0}

@@ -142,6 +142,8 @@ public class BattleScript : MonoBehaviour
         foreach (var character in new List<GameObject>(turnOrder))
         {
             if (character.GetComponent<Character>().currentHP <= 0) {
+                // this will not work when multiplayer comes around
+                Inventory.arcs += character.GetComponent<Character>().dropMoney;
                 Destroy(turnOrder[deathCheckInt]);
                 turnOrder.RemoveAt(deathCheckInt);
             }

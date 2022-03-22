@@ -14,6 +14,8 @@ public class Character : MonoBehaviour
     public string team;
     public GameObject battleHUD;
     public int critRate;
+    public int dropMoney;
+    public string dropItems;
 
     void Start()
     {
