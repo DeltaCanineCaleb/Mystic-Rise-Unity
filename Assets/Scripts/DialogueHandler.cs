@@ -21,8 +21,10 @@ public class DialogueHandler : MonoBehaviour
     PlayerState stateEnum;
     PlayerState.CurrentPlayerState playerState;
 
-    string buyDialogue;
-    string poorDialogue;
+    [HideInInspector]
+    public string buyDialogue;
+    [HideInInspector]
+    public string poorDialogue;
     [HideInInspector]
     public List<Item> shopStock = new List<Item>();
 
