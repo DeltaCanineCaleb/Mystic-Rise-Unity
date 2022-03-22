@@ -93,6 +93,7 @@ public class DialogueHandler : MonoBehaviour
                 yield break;
             } else if (dialogueLines[lineNumber] == "-SHOP-") {
                 shopGUI = true;
+                shopStock.Clear();
                 while (true) {
                     lineNumber += 1;
                     if (dialogueLines[lineNumber] == "-SHOP END-") {
