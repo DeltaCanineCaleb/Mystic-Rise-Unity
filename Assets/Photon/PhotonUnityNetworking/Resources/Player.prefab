@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Hunter
+  race: Dragonwolf
   characterLevel: 5
   attack: 6
   defense: 2
@@ -259,6 +260,7 @@ MonoBehaviour:
   critRate: 1
   dropMoney: 0
   dropItems: '-'
+  skills: []
 --- !u!114 &6018390962694759489
 MonoBehaviour:
   m_ObjectHideFlags: 0

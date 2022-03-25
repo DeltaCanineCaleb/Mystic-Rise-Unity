@@ -1,9 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
     public string characterName;
+    public string characterRace;
     public int characterLevel;
 
     public int attack;
@@ -16,10 +18,13 @@ public class Character : MonoBehaviour
     public int critRate;
     public int dropMoney;
     public string dropItems;
+    public List<string> skills;
 
-    void Start()
-    {
+    void Start() {
         battleHUD.SetActive(false);
+        if (characterRace == "Dragonwolf") {
+            skills.Add("Shadow Punch");
+        }
     }
 
     void OnMouseEnter()

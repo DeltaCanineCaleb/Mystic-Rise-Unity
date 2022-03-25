@@ -80,6 +80,13 @@ public class BattleScript : MonoBehaviour
         BattleStart(opponents);
     }
     
+    string checkForSpecialStart(List<GameObject> turnOrder) {
+        if (turnOrder[1].GetComponent<Character>().characterName == "Training Dummy") {
+            return "training dummy";
+        }
+        return null;
+    }
+
     void BattleStart(List<GameObject> enemies)
     {
         List<GameObject> turnOrder = new List<GameObject>();
@@ -112,7 +119,14 @@ public class BattleScript : MonoBehaviour
         audioManager.StopAll();
         audioManager.Play("Battle Start");
         audioManager.Play("Let's Go, Everyone!");
-        battleText.text = turnOrder[1].GetComponent<Character>().characterName + " attacks!";
+        switch (checkForSpecialStart(turnOrder)) {
+            case "training dummy":
+                battleText.text = "The training dummy is just standing there.";
+                break;
+            default:
+                battleText.text = turnOrder[1].GetComponent<Character>().characterName + " attacks!";
+                break;
+            }
         // start the battle loop using the turn order
         StartCoroutine(PlayerTurn(turnOrder));
     }

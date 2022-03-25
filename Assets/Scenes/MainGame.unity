@@ -2665,6 +2665,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4652698306236958917, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
+      propertyPath: race
+      value: Training Dummy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652698306236958917, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
       propertyPath: maxHP
       value: 1000
       objectReference: {fileID: 0}
@@ -2690,6 +2694,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4652698306236958917, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
       propertyPath: characterName
+      value: Training Dummy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652698306236958917, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}
+      propertyPath: characterRace
       value: Training Dummy
       objectReference: {fileID: 0}
     - target: {fileID: 4652698306236958917, guid: f081c309dc4684c8bb3250c7e142c2c3, type: 3}

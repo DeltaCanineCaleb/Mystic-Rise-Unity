@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Slime
+  characterRace: Slime
   characterLevel: 4
   attack: 4
   defense: 1
@@ -257,6 +258,7 @@ MonoBehaviour:
   critRate: 1
   dropMoney: 4
   dropItems: '-'
+  skills: []
 --- !u!114 &8879824645586275521
 MonoBehaviour:
   m_ObjectHideFlags: 0
