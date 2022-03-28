@@ -13,6 +13,8 @@ public class Character : MonoBehaviour
     // public int speed;
     public int currentHP;
     public int maxHP;
+    public int currentMP;
+    public int maxMP;
     public string team;
     public GameObject battleHUD;
     public int critRate;

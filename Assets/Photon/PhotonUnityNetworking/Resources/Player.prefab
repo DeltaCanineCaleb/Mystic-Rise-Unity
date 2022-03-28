@@ -249,12 +249,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Hunter
-  race: Dragonwolf
+  characterRace: Dragonwolf
   characterLevel: 5
   attack: 6
   defense: 2
   currentHP: 20
   maxHP: 20
+  currentMP: 10
+  maxMP: 10
   team: player
   battleHUD: {fileID: 3130927873697716411}
   critRate: 1

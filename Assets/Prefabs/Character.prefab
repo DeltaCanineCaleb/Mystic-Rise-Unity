@@ -253,6 +253,8 @@ MonoBehaviour:
   defense: 1
   currentHP: 15
   maxHP: 15
+  currentMP: 3
+  maxMP: 3
   team: enemy
   battleHUD: {fileID: 274066013306581051}
   critRate: 1
