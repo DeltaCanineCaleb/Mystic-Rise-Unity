@@ -22,7 +22,7 @@ public class Character : MonoBehaviour
     public string dropItems;
     public List<string> skills;
 
-    void Start() {
+    void Awake() {
         battleHUD.SetActive(false);
         if (characterRace == "Dragonwolf") {
             skills.Add("Shadow Punch");
