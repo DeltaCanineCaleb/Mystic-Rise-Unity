@@ -24,8 +24,6 @@ public class DialogueHandler : MonoBehaviour
     [HideInInspector]
     public string buyDialogue;
     [HideInInspector]
-    public string poorDialogue;
-    [HideInInspector]
     public List<Item> shopStock = new List<Item>();
 
     TextAsset file;
@@ -113,9 +111,6 @@ public class DialogueHandler : MonoBehaviour
                             break;
                         case "buymessage":
                             buyDialogue = argument;
-                            break;
-                        case "poormessage":
-                            poorDialogue = argument;
                             break;
                         case "sell":
                             Item item = AddItemToStock(argument);

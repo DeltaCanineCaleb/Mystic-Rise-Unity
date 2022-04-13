@@ -1911,7 +1911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839103426926727087, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
       propertyPath: index
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4839103426926727072, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
@@ -4338,7 +4338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839103426926727087, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
       propertyPath: index
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4839103426926727072, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
@@ -4722,6 +4722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5821ae0fa51204c8f8b5d6cc5be8af9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillsParent: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &666667892
 GameObject:
   m_ObjectHideFlags: 0
@@ -6215,7 +6217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839103426926727087, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
       propertyPath: index
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4839103426926727072, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
@@ -9131,7 +9133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839103426926727087, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
       propertyPath: index
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4839103426926727072, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
@@ -12930,7 +12932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839103426926727087, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}
       propertyPath: index
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4839103426926727072, guid: 74cff3f9af1fd49e98fe68a89701ce92, type: 3}

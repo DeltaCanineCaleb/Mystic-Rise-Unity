@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
     public int dropMoney;
     public string dropItems;
     public List<string> skills;
+    public List<string> status;
 
     void Awake() {
         battleHUD.SetActive(false);

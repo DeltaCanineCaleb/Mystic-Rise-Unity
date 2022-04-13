@@ -19,14 +19,13 @@ Yarne:Please, buy what you'd like.
 shopkeep:Yarne
 openmessage:Take a look around, stay a while.
 buymessage:Thank you for your purchase.~
-poormessage:Thank y- Oh, you can't afford that. Come back later with more money.
 sell:Apple
 sell:X-Crit
 sell:Lumine Tome I
 -SHOP END-
 Yarne:Come again!
 -END-
-// This is line 28
+// This is line 27
 
 The sign says "closed". Seems like there aren't enough items coded in the game for this shop to be functional.
 -END-

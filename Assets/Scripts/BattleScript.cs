@@ -108,7 +108,6 @@ public class BattleScript : MonoBehaviour
                 cameraTransform.position = new Vector3(enemyOpponent.transform.position.x, enemyOpponent.transform.position.y, -10f);
                 enemyOpponent.transform.position = battleStations[enemyStation].transform.position;
                 enemyOpponent.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                enemyOpponent.GetComponent<Character>().critRate = 1;
                 turnOrder.Add(enemyOpponent);
                 enemyStation += 1;
             }
@@ -167,6 +166,7 @@ public class BattleScript : MonoBehaviour
         List<GameObject> rightTeam = separateTeams(turnOrder, "right");
         if (leftTeam.Count == 0 || rightTeam.Count == 0) {
             stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+            player.GetComponent<Character>().critRate = 1;
             audioManager.StopAll();
             audioManager.Play("Temo Village");
             StopAllCoroutines();

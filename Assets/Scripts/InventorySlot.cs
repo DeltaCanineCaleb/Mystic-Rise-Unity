@@ -39,6 +39,11 @@ public class InventorySlot : MonoBehaviour
         description.text = item.description;
         if (isShop) {
             amount.text = "$" + item.cost;
+            if (item.cost > Inventory.arcs) {
+                slot.GetComponent<Button>().enabled = false;
+            } else {
+                slot.GetComponent<Button>().enabled = true;
+            }
         } else {
             if (item.isStackable) {
                 amount.text = "x" + item.count;
@@ -69,9 +74,7 @@ public class InventorySlot : MonoBehaviour
                 Inventory.instance.AddItem(item);
                 Inventory.arcs -= item.cost;
                 shopInfo.shopTextboxText.text = shopInfo.buyDialogue;
-            } else {
-                shopInfo.shopTextboxText.text = shopInfo.poorDialogue;
-            }
+            } 
         } else {
             if (item != null && itemUsable(item)) {
                 item.Use();

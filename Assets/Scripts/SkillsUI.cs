@@ -7,12 +7,15 @@ public class SkillsUI : MonoBehaviour
     public Transform skillsParent;
     [HideInInspector]
     public GameObject player;
-    InventorySlot[] slots;
+    List<string> skills;
+    SkillSlot[] slots;
 
     void Start()
     {
         player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player;
         UpdateUI();
+
+        skills = player.GetComponent<Character>().skills;
 
         // slots = skillsParent.GetComponentsInChildren<SkillSlot>();
     }
@@ -21,8 +24,8 @@ public class SkillsUI : MonoBehaviour
     public void UpdateUI()
     {
         for (int i = 0; i < slots.Length; i++) {
-            if (i < inventory.items.Count) {
-                slots[i].AddItem(inventory.items[i]);
+            if (i < skills.Count) {
+                slots[i].AddSkill(skills[i]);
             } else {
                 slots[i].ClearSlot();
             }
