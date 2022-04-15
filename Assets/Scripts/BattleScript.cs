@@ -14,6 +14,7 @@ public class BattleScript : MonoBehaviour
     public Text battleText;
     public GameObject panelOfButtons;
     public GameObject itemsMenu;
+    public GameObject skillsMenu;
     [HideInInspector]
     public GameObject player;
 
@@ -25,12 +26,17 @@ public class BattleScript : MonoBehaviour
     public Button skillsButton;
     public Button runButton;
     public Button itemsBackButton;
+    public Button skillsBackButton;
     public Button invSlot1;
     public Button invSlot2;
     public Button invSlot3;
     public Button invSlot4;
     public Button invSlot5;
     public Button invSlot6;
+    public Button skiSlot1;
+    public Button skiSlot2;
+    public Button skiSlot3;
+    public Button skiSlot4;
 
     Transform cameraTransform;
     [HideInInspector]
@@ -212,7 +218,7 @@ public class BattleScript : MonoBehaviour
             battleText.text = "What will you do?";
         }
         panelOfButtons.SetActive(true);
-        var waitForButton = new WaitForUIButtons(attackButton, runButton, itemsButton);
+        var waitForButton = new WaitForUIButtons(attackButton, runButton, itemsButton, skillsButton);
         GameObject target = separateTeams(turnOrder, "right")[0];
         yield return waitForButton.Reset();
         if (waitForButton.PressedButton == attackButton) {
@@ -270,6 +276,32 @@ public class BattleScript : MonoBehaviour
                 string item = waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().item.name;
                 waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().UseItem();
                 battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used a" + ifVowel(item) + " " + item + "!";
+                yield return new WaitForSeconds(waitTime);
+                // check for if anyone died
+                if (!checkDeath(turnOrder)) {
+                    // move turnOrder
+                    GameObject playerTurn = turnOrder[0];
+                    turnOrder.RemoveAt(0);
+                    turnOrder.Add(playerTurn);
+                    if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                        StartCoroutine(CPUTurn(turnOrder));
+                    } else {
+                        StartCoroutine(PlayerTurn(turnOrder));
+                    }
+                }
+            }
+        } else if (waitForButton.PressedButton == skillsButton) {
+            skillsMenu.SetActive(true);
+            var waitForSkills = new WaitForUIButtons(skillsBackButton, skiSlot1, skiSlot2, skiSlot3, skiSlot4); 
+            yield return waitForSkills.Reset();
+            if (waitForSkills.PressedButton == skillsBackButton) {
+                skillsMenu.SetActive(false);
+                StartCoroutine(PlayerTurn(turnOrder));
+            } else {
+                itemsMenu.SetActive(false);
+                string skill = waitForSkills.PressedButton.transform.parent.GetComponent<SkillSlot>().skill.name;
+                waitForSkills.PressedButton.transform.parent.GetComponent<SkillSlot>().UseSkill();
+                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used " + skill + "!";
                 yield return new WaitForSeconds(waitTime);
                 // check for if anyone died
                 if (!checkDeath(turnOrder)) {

@@ -71,8 +71,8 @@ public class InventorySlot : MonoBehaviour
         if (isShop) {
             DialogueHandler shopInfo = GameObject.Find("GameManager").GetComponent<DialogueHandler>();
             if (item.cost <= Inventory.arcs) {
-                Inventory.instance.AddItem(item);
                 Inventory.arcs -= item.cost;
+                Inventory.instance.AddItem(item);
                 shopInfo.shopTextboxText.text = shopInfo.buyDialogue;
             } 
         } else {

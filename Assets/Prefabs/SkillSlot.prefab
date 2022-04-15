@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2793486475610337301}
   - component: {fileID: 6790864507551927262}
-  - component: {fileID: 818527532033951140}
+  - component: {fileID: 7617865086513778699}
   m_Layer: 5
   m_Name: SkillSlot
   m_TagString: Untagged
@@ -59,7 +59,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &818527532033951140
+--- !u!114 &7617865086513778699
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,16 +68,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1341716469103847447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c86f96b0d397a2b4d99961207a3b9184, type: 3}
+  m_Script: {fileID: 11500000, guid: e5964720f7d0242b997f6b251adf0a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  icon: {fileID: 0}
-  slot: {fileID: 7922748797751435859}
-  itemName: {fileID: 6888187857963630145}
-  description: {fileID: 0}
-  amount: {fileID: 2697085314265591546}
-  isShop: 0
+  skill: {fileID: 0}
+  slot: {fileID: 1341716469103847447}
+  skillName: {fileID: 0}
+  skillCost: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &2589610601521034302
 GameObject:
   m_ObjectHideFlags: 0

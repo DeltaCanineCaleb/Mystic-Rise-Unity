@@ -7,17 +7,32 @@ public class SkillsUI : MonoBehaviour
     public Transform skillsParent;
     [HideInInspector]
     public GameObject player;
-    List<string> skills;
+    List<Skill> skills;
     SkillSlot[] slots;
+
+    Skill AddSkillToList(string argument) {
+        Skill[] skillsReso = Resources.LoadAll<Skill>("Skills");
+        foreach (Skill skill in skillsReso) {
+            if (skill.name == argument) {
+                Debug.Log("IT MATCHES");
+                return skill;
+            }
+        }
+        return null;
+    }
 
     void Start()
     {
         player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player;
+
+        List<string> skillList = player.GetComponent<Character>().skills;
+        for (int i = 0; i < skillList.Count; i++) {
+            skills.Add(AddSkillToList(skillList[i]));
+        }
+        
+        slots = skillsParent.GetComponentsInChildren<SkillSlot>();
+
         UpdateUI();
-
-        skills = player.GetComponent<Character>().skills;
-
-        // slots = skillsParent.GetComponentsInChildren<SkillSlot>();
     }
 
 

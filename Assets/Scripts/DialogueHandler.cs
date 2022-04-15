@@ -39,7 +39,7 @@ public class DialogueHandler : MonoBehaviour
     
     Item AddItemToStock(string argument) {
         Item[] items = Resources.LoadAll<Item>("Items");
-        foreach (var item in items) {
+        foreach (Item item in items) {
             if (item.name == argument) {
                 return item;
             }

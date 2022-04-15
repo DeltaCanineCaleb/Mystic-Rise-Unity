@@ -34,7 +34,7 @@ public class SkillSlot : MonoBehaviour
 
     public void UseSkill () {
         if (skill != null) {
-                skill.Use();
-            }
+            skill.Use();
+        }
     }
 }

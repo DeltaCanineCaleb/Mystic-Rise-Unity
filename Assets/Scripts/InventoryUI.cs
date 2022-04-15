@@ -51,11 +51,6 @@ public class InventoryUI : MonoBehaviour
             for (int i = 0; i < slots.Length; i++) {
                 if (i < inventory.items.Count) {
                     slots[i].AddItem(inventory.items[i]);
-                    if (inventory.items[i].cost <= Inventory.arcs) {
-                        slots[i].GetComponent<Button>().enabled = true;
-                    } else {
-                        slots[i].GetComponent<Button>().enabled = false;
-                    }
                 } else {
                     slots[i].ClearSlot();
                 }
@@ -65,6 +60,11 @@ public class InventoryUI : MonoBehaviour
             for (int i = 0; i < slots.Length; i++) {
                 if (i < shopStock.Count) {
                     slots[i].AddItem(shopStock[i]);
+                    if (shopStock[i].cost <= Inventory.arcs) {
+                        slots[i].transform.GetChild(0).GetComponent<Button>().enabled = true;
+                    } else {
+                        slots[i].transform.GetChild(0).GetComponent<Button>().enabled = false;
+                    }
                 } else {
                     slots[i].ClearSlot();
                 }
