@@ -194,19 +194,23 @@ public class BattleScript : MonoBehaviour
 
     IEnumerator Attack(List<GameObject> turnOrder, GameObject target) {
         int runRoll = RandomNumber(0,16);
+        string skillStr = "";
+        if (String.Join(", ", turnOrder[0].GetComponent<Character>().status).Contains("charge")) {
+            skillStr = " used Shadow Punch and";
+        }
         if (runRoll < turnOrder[0].GetComponent<Character>().critRate && turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
             audioManager.Play("Crit Damage");
-            battleText.text = "Critical hit! " + turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target, true)) + " damage!";
+            battleText.text = "Critical hit! " + turnOrder[0].GetComponent<Character>().characterName + skillStr + " attacked for " + (DamageCalculation(turnOrder[0], target, true)) + " damage!";
             target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target, true));
             yield return new WaitForSeconds(waitTime);
         } else if (turnOrder[0].GetComponent<Character>().attack > target.GetComponent<Character>().defense) {
             audioManager.Play("Damage");
-            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for " + (DamageCalculation(turnOrder[0], target, false)) + " damage!";
+            battleText.text = turnOrder[0].GetComponent<Character>().characterName + skillStr + " attacked for " + (DamageCalculation(turnOrder[0], target, false)) + " damage!";
             target.GetComponent<Character>().currentHP -= (DamageCalculation(turnOrder[0], target, false));
             yield return new WaitForSeconds(waitTime);
         } else if (turnOrder[0].GetComponent<Character>().attack > 0) {
             audioManager.Play("Null Damage");
-            battleText.text = turnOrder[0].GetComponent<Character>().characterName + " attacked for 0 damage!";
+            battleText.text = turnOrder[0].GetComponent<Character>().characterName + skillStr + " attacked for 0 damage!";
             yield return new WaitForSeconds(waitTime);
         }
         yield break;
@@ -214,105 +218,132 @@ public class BattleScript : MonoBehaviour
 
     IEnumerator PlayerTurn(List<GameObject> turnOrder)
     {
-        if (battleText.text.Contains("damage") || battleText.text.Contains("used")) {
-            battleText.text = "What will you do?";
-        }
-        panelOfButtons.SetActive(true);
-        var waitForButton = new WaitForUIButtons(attackButton, runButton, itemsButton, skillsButton);
-        GameObject target = separateTeams(turnOrder, "right")[0];
-        yield return waitForButton.Reset();
-        if (waitForButton.PressedButton == attackButton) {
-            panelOfButtons.SetActive(false);
+        if (String.Join(", ", turnOrder[0].GetComponent<Character>().status).Contains("charge")) {
+            GameObject target = separateTeams(turnOrder, "right")[0];
+            int oldAtk = turnOrder[0].GetComponent<Character>().attack;
+            turnOrder[0].GetComponent<Character>().attack *= 2;
             yield return StartCoroutine(Attack(turnOrder, target));
+            turnOrder[0].GetComponent<Character>().attack = oldAtk;
+            turnOrder[0].GetComponent<Character>().status.Remove("charge");
             // check for if anyone died
-            if (!checkDeath(turnOrder)) {
-                // move turnOrder
-                GameObject playerTurn = turnOrder[0];
-                turnOrder.RemoveAt(0);
-                turnOrder.Add(playerTurn);
-                if (turnOrder[0].GetComponent<Character>().team == "enemy") {
-                    StartCoroutine(CPUTurn(turnOrder));
+                if (!checkDeath(turnOrder)) {
+                    // move turnOrder
+                    GameObject playerTurn = turnOrder[0];
+                    turnOrder.RemoveAt(0);
+                    turnOrder.Add(playerTurn);
+                    if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                        StartCoroutine(CPUTurn(turnOrder));
+                    } else {
+                        StartCoroutine(PlayerTurn(turnOrder));
+                    }
+                }
+        } else {
+            if (battleText.text.Contains("damage") || battleText.text.Contains("used")) {
+                battleText.text = "What will you do?";
+            }
+            panelOfButtons.SetActive(true);
+            var waitForButton = new WaitForUIButtons(attackButton, runButton, itemsButton, skillsButton);
+            GameObject target = separateTeams(turnOrder, "right")[0];
+            yield return waitForButton.Reset();
+            if (waitForButton.PressedButton == attackButton) {
+                panelOfButtons.SetActive(false);
+                yield return StartCoroutine(Attack(turnOrder, target));
+                // StartCoroutine(EndOfTurn(turnOrder));
+                // check for if anyone died
+                if (!checkDeath(turnOrder)) {
+                    // move turnOrder
+                    GameObject playerTurn = turnOrder[0];
+                    turnOrder.RemoveAt(0);
+                    turnOrder.Add(playerTurn);
+                    if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                        StartCoroutine(CPUTurn(turnOrder));
+                    } else {
+                        StartCoroutine(PlayerTurn(turnOrder));
+                    }
+                }
+            } else if (waitForButton.PressedButton == runButton) {
+                int runRoll = RandomNumber(0,100);
+                panelOfButtons.SetActive(false);
+                if (runRoll <= runChance) {
+                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " fled!";
+                    yield return new WaitForSeconds(waitTime);
+                    stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
+                    audioManager.StopAll();
+                    audioManager.Play("Temo Village");
+                    StopAllCoroutines();
                 } else {
+                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " tried to run, but couldn't get away!";
+                    yield return new WaitForSeconds(waitTime);
+                    if (!checkDeath(turnOrder)) {
+                        // move turnOrder
+                        GameObject playerTurn = turnOrder[0];
+                        turnOrder.RemoveAt(0);
+                        turnOrder.Add(playerTurn);
+                        if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                            StartCoroutine(CPUTurn(turnOrder));
+                        } else {
+                            StartCoroutine(PlayerTurn(turnOrder));
+                        }
+                    }
+                }
+            } else if (waitForButton.PressedButton == itemsButton) {
+                panelOfButtons.SetActive(false);
+                itemsMenu.SetActive(true);
+                var waitForItems = new WaitForUIButtons(itemsBackButton, invSlot1, invSlot2, invSlot3, invSlot4, invSlot5, invSlot6); 
+                yield return waitForItems.Reset();
+                if (waitForItems.PressedButton == itemsBackButton) {
+                    panelOfButtons.SetActive(true);
+                    itemsMenu.SetActive(false);
                     StartCoroutine(PlayerTurn(turnOrder));
-                }
-            }
-        } else if (waitForButton.PressedButton == runButton) {
-            int runRoll = RandomNumber(0,100);
-            panelOfButtons.SetActive(false);
-            if (runRoll <= runChance) {
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " fled!";
-                yield return new WaitForSeconds(waitTime);
-                stateEnum.state = PlayerState.CurrentPlayerState.OVERWORLD;
-                audioManager.StopAll();
-                audioManager.Play("Temo Village");
-                StopAllCoroutines();
-            } else {
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " tried to run, but couldn't get away!";
-                yield return new WaitForSeconds(waitTime);
-                if (!checkDeath(turnOrder)) {
-                    // move turnOrder
-                    GameObject playerTurn = turnOrder[0];
-                    turnOrder.RemoveAt(0);
-                    turnOrder.Add(playerTurn);
-                    if (turnOrder[0].GetComponent<Character>().team == "enemy") {
-                        StartCoroutine(CPUTurn(turnOrder));
-                    } else {
-                        StartCoroutine(PlayerTurn(turnOrder));
+                // I really wish I could optimize this code I hate it so much [legacy comment]
+                } else {
+                    itemsMenu.SetActive(false);
+                    string item = waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().item.name;
+                    waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().UseItem();
+                    battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used a" + ifVowel(item) + " " + item + "!";
+                    yield return new WaitForSeconds(waitTime);
+                    // check for if anyone died
+                    if (!checkDeath(turnOrder)) {
+                        // move turnOrder
+                        GameObject playerTurn = turnOrder[0];
+                        turnOrder.RemoveAt(0);
+                        turnOrder.Add(playerTurn);
+                        if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                            StartCoroutine(CPUTurn(turnOrder));
+                        } else {
+                            StartCoroutine(PlayerTurn(turnOrder));
+                        }
                     }
                 }
-            }
-        } else if (waitForButton.PressedButton == itemsButton) {
-            panelOfButtons.SetActive(false);
-            itemsMenu.SetActive(true);
-            var waitForItems = new WaitForUIButtons(itemsBackButton, invSlot1, invSlot2, invSlot3, invSlot4, invSlot5, invSlot6); 
-            yield return waitForItems.Reset();
-            if (waitForItems.PressedButton == itemsBackButton) {
-                panelOfButtons.SetActive(true);
-                itemsMenu.SetActive(false);
-                StartCoroutine(PlayerTurn(turnOrder));
-            // I really wish I could optimize this code I hate it so much [legacy comment]
-            } else {
-                itemsMenu.SetActive(false);
-                string item = waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().item.name;
-                waitForItems.PressedButton.transform.parent.GetComponent<InventorySlot>().UseItem();
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used a" + ifVowel(item) + " " + item + "!";
-                yield return new WaitForSeconds(waitTime);
-                // check for if anyone died
-                if (!checkDeath(turnOrder)) {
-                    // move turnOrder
-                    GameObject playerTurn = turnOrder[0];
-                    turnOrder.RemoveAt(0);
-                    turnOrder.Add(playerTurn);
-                    if (turnOrder[0].GetComponent<Character>().team == "enemy") {
-                        StartCoroutine(CPUTurn(turnOrder));
+            } else if (waitForButton.PressedButton == skillsButton) {
+                skillsMenu.SetActive(true);
+                var waitForSkills = new WaitForUIButtons(skillsBackButton, skiSlot1, skiSlot2, skiSlot3, skiSlot4); 
+                yield return waitForSkills.Reset();
+                if (waitForSkills.PressedButton == skillsBackButton) {
+                    skillsMenu.SetActive(false);
+                    StartCoroutine(PlayerTurn(turnOrder));
+                } else {
+                    skillsMenu.SetActive(false);
+                    panelOfButtons.SetActive(false);
+                    string skill = waitForSkills.PressedButton.transform.parent.GetComponent<SkillSlot>().skill.name;
+                    waitForSkills.PressedButton.transform.parent.GetComponent<SkillSlot>().UseSkill();
+                    if (skill == "Shadow Punch") {
+                        battleText.text = turnOrder[0].GetComponent<Character>().characterName + " is charging an attack...";
                     } else {
-                        StartCoroutine(PlayerTurn(turnOrder));
+                        battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used " + skill + "!";
                     }
-                }
-            }
-        } else if (waitForButton.PressedButton == skillsButton) {
-            skillsMenu.SetActive(true);
-            var waitForSkills = new WaitForUIButtons(skillsBackButton, skiSlot1, skiSlot2, skiSlot3, skiSlot4); 
-            yield return waitForSkills.Reset();
-            if (waitForSkills.PressedButton == skillsBackButton) {
-                skillsMenu.SetActive(false);
-                StartCoroutine(PlayerTurn(turnOrder));
-            } else {
-                itemsMenu.SetActive(false);
-                string skill = waitForSkills.PressedButton.transform.parent.GetComponent<SkillSlot>().skill.name;
-                waitForSkills.PressedButton.transform.parent.GetComponent<SkillSlot>().UseSkill();
-                battleText.text = turnOrder[0].GetComponent<Character>().characterName + " used " + skill + "!";
-                yield return new WaitForSeconds(waitTime);
-                // check for if anyone died
-                if (!checkDeath(turnOrder)) {
-                    // move turnOrder
-                    GameObject playerTurn = turnOrder[0];
-                    turnOrder.RemoveAt(0);
-                    turnOrder.Add(playerTurn);
-                    if (turnOrder[0].GetComponent<Character>().team == "enemy") {
-                        StartCoroutine(CPUTurn(turnOrder));
-                    } else {
-                        StartCoroutine(PlayerTurn(turnOrder));
+                    yield return new WaitForSeconds(waitTime);
+                    // check for if anyone died
+                    if (!checkDeath(turnOrder)) {
+                        // move turnOrder
+                        GameObject playerTurn = turnOrder[0];
+                        turnOrder.RemoveAt(0);
+                        turnOrder.Add(playerTurn);
+                        if (turnOrder[0].GetComponent<Character>().team == "enemy") {
+                            StartCoroutine(CPUTurn(turnOrder));
+                        } else {
+                            StartCoroutine(PlayerTurn(turnOrder));
+                        }
                     }
                 }
             }

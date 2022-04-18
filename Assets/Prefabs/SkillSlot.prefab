@@ -72,9 +72,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 0}
-  slot: {fileID: 1341716469103847447}
-  skillName: {fileID: 0}
-  skillCost: {fileID: 0}
+  slot: {fileID: 7922748797751435859}
+  skillName: {fileID: 6888187857963630145}
+  skillCost: {fileID: 2697085314265591546}
   player: {fileID: 0}
 --- !u!1 &2589610601521034302
 GameObject:
@@ -143,7 +143,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -254,7 +254,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4821585388890452937
 RectTransform:
   m_ObjectHideFlags: 0

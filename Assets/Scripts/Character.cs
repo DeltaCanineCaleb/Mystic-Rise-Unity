@@ -20,8 +20,8 @@ public class Character : MonoBehaviour
     public int critRate;
     public int dropMoney;
     public string dropItems;
-    public List<string> skills;
-    public List<string> status;
+    public List<string> skills = new List<string>();
+    public List<string> status = new List<string>();
 
     void Awake() {
         battleHUD.SetActive(false);

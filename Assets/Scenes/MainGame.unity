@@ -835,7 +835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1341716469103847447, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2793486475610337301, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_Pivot.x
@@ -920,6 +920,10 @@ PrefabInstance:
     - target: {fileID: 2793486475610337301, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7922748797751435859, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
+      propertyPath: m_Name
+      value: Skill
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -2895,7 +2899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1341716469103847447, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2793486475610337301, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_Pivot.x
@@ -2980,6 +2984,10 @@ PrefabInstance:
     - target: {fileID: 2793486475610337301, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7922748797751435859, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
+      propertyPath: m_Name
+      value: Skill
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -10919,7 +10927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1341716469103847447, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2793486475610337301, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_Pivot.x
@@ -11004,6 +11012,10 @@ PrefabInstance:
     - target: {fileID: 2793486475610337301, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7922748797751435859, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
+      propertyPath: m_Name
+      value: Skill
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -15369,7 +15381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1341716469103847447, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2793486475610337301, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_Pivot.x
@@ -15453,6 +15465,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2793486475610337301, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7922748797751435859, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
+      propertyPath: m_Name
+      value: Skill
+      objectReference: {fileID: 0}
+    - target: {fileID: 7922748797751435859, guid: 8ee5990eb803e4148882ff79669adeea, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

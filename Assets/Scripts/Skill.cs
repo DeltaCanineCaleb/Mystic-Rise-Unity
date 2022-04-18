@@ -9,10 +9,10 @@ public class Skill : ScriptableObject
 
     public virtual void Use() {
         Debug.Log("Using " + name);
-        if (type.Contains("status")) {
-            // format will be status,[status to inflict]
+        if (type.Contains("selfstatus")) {
+            // format will be status, [status to inflict]
             Character player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player.GetComponent<Character>();
-            string status = type.Split(","[0])[1];
+            string status = type.Split(","[0])[1].Trim();
             player.status.Add(status);
         }
     }

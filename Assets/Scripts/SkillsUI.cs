@@ -7,14 +7,13 @@ public class SkillsUI : MonoBehaviour
     public Transform skillsParent;
     [HideInInspector]
     public GameObject player;
-    List<Skill> skills;
+    List<Skill> skills = new List<Skill>();
     SkillSlot[] slots;
 
     Skill AddSkillToList(string argument) {
         Skill[] skillsReso = Resources.LoadAll<Skill>("Skills");
         foreach (Skill skill in skillsReso) {
             if (skill.name == argument) {
-                Debug.Log("IT MATCHES");
                 return skill;
             }
         }
