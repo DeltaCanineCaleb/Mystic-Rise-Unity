@@ -108,12 +108,13 @@ public class BattleScript : MonoBehaviour
             turnOrder.Add(enemyOpponent);
         } else {
             int enemyStation = 2;
-            foreach (var enemy in enemies)
+            foreach (GameObject enemy in enemies)
             {
                 enemyOpponent = enemy;
                 cameraTransform.position = new Vector3(enemyOpponent.transform.position.x, enemyOpponent.transform.position.y, -10f);
                 enemyOpponent.transform.position = battleStations[enemyStation].transform.position;
                 enemyOpponent.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                enemyOpponent.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
                 turnOrder.Add(enemyOpponent);
                 enemyStation += 1;
             }
@@ -138,9 +139,10 @@ public class BattleScript : MonoBehaviour
 
     List<GameObject> separateTeams(List<GameObject> turnOrder, string side)
     {
+        // UNEXPLICABLY CAUSES ARGUMENTOUTOFRANGEEXCEPTION WHEN RUNNING INTO ENEMY, BEING LOOKED INTO
         List<GameObject> leftTeam = new List<GameObject>();
         List<GameObject> rightTeam = new List<GameObject>();
-        foreach (var character in turnOrder)
+        foreach (GameObject character in turnOrder)
         {
             if (character.GetComponent<Character>().team == "enemy") {
                 rightTeam.Add(character);
