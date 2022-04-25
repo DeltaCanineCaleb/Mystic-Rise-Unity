@@ -114,9 +114,10 @@ GameObject:
   - component: {fileID: 4652698306236958918}
   - component: {fileID: 4652698306236958917}
   - component: {fileID: 8879824645586275521}
+  - component: {fileID: 552198002703276164}
   m_Layer: 0
   m_Name: Character
-  m_TagString: Players
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -261,6 +262,7 @@ MonoBehaviour:
   dropMoney: 4
   dropItems: '-'
   skills: []
+  status: []
 --- !u!114 &8879824645586275521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +276,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 4652698306236958912}
+--- !u!114 &552198002703276164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4652698306236958912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d14043f2eda24ced948ac05e9f164ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1001 &5877503873214572020
 PrefabInstance:
   m_ObjectHideFlags: 0

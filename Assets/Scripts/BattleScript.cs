@@ -38,7 +38,6 @@ public class BattleScript : MonoBehaviour
     public Button skiSlot3;
     public Button skiSlot4;
 
-    Transform cameraTransform;
     [HideInInspector]
     public AudioManager audioManager;
     public int runChance;
@@ -57,7 +56,6 @@ public class BattleScript : MonoBehaviour
     void Awake() {
         stateEnum = GameObject.Find("GameManager").GetComponent<PlayerState>();
         audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
-        cameraTransform = playerCamera.transform;
         player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player;
     }
 
@@ -111,10 +109,10 @@ public class BattleScript : MonoBehaviour
             foreach (GameObject enemy in enemies)
             {
                 enemyOpponent = enemy;
-                cameraTransform.position = new Vector3(enemyOpponent.transform.position.x, enemyOpponent.transform.position.y, -10f);
+                playerCamera.transform.position = new Vector3(enemyOpponent.transform.position.x, enemyOpponent.transform.position.y, -10f);
                 enemyOpponent.transform.position = battleStations[enemyStation].transform.position;
                 enemyOpponent.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                enemyOpponent.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
+                // enemyOpponent.transform.GetChild(0).GetComponent<Canvas>().worldCamera = playerCamera;
                 turnOrder.Add(enemyOpponent);
                 enemyStation += 1;
             }
@@ -128,9 +126,11 @@ public class BattleScript : MonoBehaviour
         switch (checkForSpecialStart(turnOrder)) {
             case "training dummy":
                 battleText.text = "The training dummy is just standing there.";
+                runChance = 100;
                 break;
             default:
                 battleText.text = turnOrder[1].GetComponent<Character>().characterName + " attacks!";
+                runChance = 84;
                 break;
             }
         // start the battle loop using the turn order

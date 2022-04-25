@@ -263,6 +263,7 @@ MonoBehaviour:
   dropMoney: 0
   dropItems: '-'
   skills: []
+  status: []
 --- !u!114 &6018390962694759489
 MonoBehaviour:
   m_ObjectHideFlags: 0
