@@ -7,10 +7,11 @@ public class SkillsUI : MonoBehaviour
     public Transform skillsParent;
     [HideInInspector]
     public GameObject player;
-    List<Skill> skills = new List<Skill>();
+    [HideInInspector]
+    public List<Skill> skills = new List<Skill>();
     SkillSlot[] slots;
 
-    Skill AddSkillToList(string argument) {
+    public Skill AddSkillToList(string argument) {
         Skill[] skillsReso = Resources.LoadAll<Skill>("Skills");
         foreach (Skill skill in skillsReso) {
             if (skill.name == argument) {

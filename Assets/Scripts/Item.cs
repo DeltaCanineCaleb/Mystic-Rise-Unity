@@ -31,6 +31,14 @@ public class Item : ScriptableObject
             }
         } else if (type == "skill") {
             Character player = GameObject.Find("Main Camera").GetComponent<CameraFollow>().player.GetComponent<Character>();
+            string skill = "";
+            if (name == "Lumine Tome I") {
+                skill = "Restore";
+            }
+            player.skills.Add(skill);
+            SkillsUI skillsUI = GameObject.Find("Battle System UI").GetComponent<SkillsUI>();
+            skillsUI.skills.Add(skillsUI.AddSkillToList(skill));
+            skillsUI.UpdateUI();
         }
     }
 }

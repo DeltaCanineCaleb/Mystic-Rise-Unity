@@ -27,6 +27,7 @@ public class Character : MonoBehaviour
         battleHUD.SetActive(false);
         if (characterRace == "Dragonwolf") {
             skills.Add("Shadow Punch");
+            Inventory.arcs += 400;
         }
     }
 
